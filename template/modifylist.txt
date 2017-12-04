@@ -1,0 +1,172 @@
+{
+  "file": [
+           { "#KUBEAPI#": 
+             [
+               {"manifests/kube-apiserver.yaml": "/etc/kubernetes/manifests/kube-apiserver.yaml"}
+             ]
+           },
+           { "#KUBECONTR#": 
+             [
+               {"manifests/kube-controller-manager.yaml": "/etc/kubernetes/manifests/kube-controller-manager.yaml"}
+             ]
+           },
+           { "#KUBEPROX#": 
+             [
+               {"manifests/kube-proxy.yaml": "/etc/kubernetes/manifests/kube-proxy.yaml"}
+             ]
+           },
+           { "#KUBESCHL#": 
+             [
+               {"manifests/kube-scheduler.yaml": "/etc/kubernetes/manifests/kube-scheduler.yaml"}
+             ]
+           },
+           { "#CA_KEY#":
+             [
+               {"ssl/ca-key.pem": "/etc/ssl/certs/ca-key.pem"}
+             ]
+           },
+           { "#CA_CERT#": 
+             [
+               {"ssl/ca.pem": "/etc/ssl/certs/ca.pem"},
+               {"ssl/ca.pem": "/etc/kubernetes/ssl/ca.pem"},
+               {"ssl/ca.pem": "/var/lib/etcd/ssl/ca.pem"}
+             ]
+           },
+           { "#ETCD_NODE#": 
+             [
+               {"ssl/etcd-node.pem": "/var/lib/etcd/ssl/etcd-node.pem"},
+               {"ssl/etcd-node.pem": "/etc/docker/server.pem"},
+               {"ssl/etcd-node.pem": "/etc/kubernetes/ssl/etcd-node.pem"}
+             ]
+           },
+           { "#ETCD_KEY#": 
+             [
+               {"ssl/etcd-node-key.pem": "/var/lib/etcd/ssl/etcd-node-key.pem"},
+               {"ssl/etcd-node-key.pem": "/etc/docker/server-key.pem"},
+               {"ssl/etcd-node-key.pem": "/etc/kubernetes/ssl/etcd-node-key.pem"}
+             ]
+           }
+  ],
+  "entry": [
+            { "#THIS_NODE#":
+              [{"host": "#THIS_NODE@"}]
+            },
+            { "#THIS_NODE_IP#":  
+              [{"ip": "#THIS_NODE_IP@"}]
+            },
+            { "#NODE1#":  
+              [{"host":  "#NODE1@"}]
+            },
+            { "#NODE2#":  
+              [{"host":  "#NODE2@"}]
+            },
+            { "#NODE3#":  
+              [{"host":  "#NODE3@"}]
+            },
+            { "#NODE1_IP#":  
+              [{"ip":  "#NODE1_IP@"}]
+            },
+            { "#NODE2_IP#":  
+              [{"ip":  "#NODE2_IP@"}]
+            },
+            { "#NODE3_IP#":  
+              [{"ip":  "#NODE3_IP@"}]
+            },
+            { "#USER#":  
+              [{"user":  "#USER@"}]
+            },
+            { "#PASSWD#":  
+              [{"password":  "#PASSWD@"}]
+            },
+            { "#SSH_KEY#":  
+              [{"ssh_key": "#SSH_KEY@"}]
+            },
+            { "#MOTD#":  
+              [{"motd":  "#MOTD@"}]
+            },
+            { "#HTTP_PROXY1#":  
+              [{"http_proxy":  "#HTTP_PROXY1@"}]
+            },
+            { "#HTTPS_PROXY1#":  
+              [{"https_proxy":  "#HTTPS_PROXY1@"}]
+            },
+            { "#HTTP_PROXY2#":  
+              [{"http_proxy":  "#HTTP_PROXY2@"}]
+            },
+            { "#HTTPS_PROXY2#":  
+              [{"https_proxy":  "#HTTPS_PROXY2@"}]
+            },
+            { "#DOMAIN#":  
+              [{"domain":  "#DOMAIN@"}]
+            },
+            { "#TIME#":  
+              [{"time":  "#TIME@"}]
+            },
+            { "#NODE_GW#":  
+              [{"gateway":  "#NODE_GW@"}]
+            },
+            { "#DNS1#":  
+              [{"dns":  "#DNS1@"}]
+            },
+            { "#DNS2#":  
+              [{"dns":  "#DNS2@"}]
+            },
+            { "#FLANNELD_IFACE#":  
+              [{"flanneld_iface":  "#FLANNELD_IFACE@"}]
+            },
+            { "#FLANNELD_ETCD_PREFIX#":  
+              [{"flanneld_etcd_prefix":  "#FLANNELD_ETCD_PREFIX@"}]
+            },
+            { "#CIDR_NETWORK#":  
+              [{"cidr_network":  "#CIDR_NETWORK@"}]
+            },
+            { "#CLUSTER_NETWORK#":  
+              [{"cluster_network":  "#CLUSTER_NETWORK@"}]
+            },
+            { "#CLUSTER_DNS#":  
+              [{"cluster_dns":  "#CLUSTER_DNS@"}]
+            },
+            { "#DOCKER_OPTS#":  
+              [{"docker_opts":  ""}]
+            },
+            { "#DOCKER_OPT_BIP#":  
+              [{"docker_opt_bip":  ""}]
+            },
+            { "#DOCKER_OPT_IPMASQ#":  
+              [{"docker_opt_ipmasq":  ""}]
+            },
+            { "#CA_FILE1#":  
+              [{"ca_file":  "/etc/ssl/certs/ca.pem"}]
+            },
+            { "#CA_FILE2#":  
+              [{"ca_file":  "/var/lib/etcd/ssl/ca.pem"}]
+            },
+            { "#CA_FILE3#":  
+              [{"ca_file":  "/etc/kubernetes/ssl/ca.pem"}]
+            },
+            { "#CA_FILE4#":  
+              [{"ca_file":  "/etc/docker/ca.pem"}]
+            },
+            { "#ETCDCTL_CERT_FILE1#":  
+              [{"etcdctl_cert_file":  "/var/lib/etcd/ssl/etcd-node.pem"}]
+            },
+            { "#ETCDCTL_CERT_FILE2#":  
+              [{"etcdctl_cert_file":  "/etc/kubernetes/ssl/etcd-node.pem"}]
+            },
+            { "#ETCDCTL_KEY_FILE1#":  
+              [{"etcdctl_key_file":  "/var/lib/etcd/ssl/etcd-node-key.pem"}]
+            },
+            { "#ETCDCTL_KEY_FILE2#":  
+              [{"etcdctl_key_file":  "/etc/kubernetes/ssl/etcd-node-key.pem"}]
+            },
+            { "#INITIAL_CLUSTER_STATE#":  
+              [{"initial_cluster_state":  "new"}]
+            },
+            { "#SSL_DIR#":  
+              [{"ssl_dir":  "/var/lib/etcd/ssl"}]
+            },
+            { "#KUBELET_VERSION#":  
+              [{"kubelet_version":  "#KUBELET_VERSION@"}]
+            }
+  ]
+}

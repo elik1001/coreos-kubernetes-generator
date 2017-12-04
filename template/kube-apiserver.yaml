@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  hostNetwork: true
+  containers:
+  - name: kube-apiserver
+    image: quay.io/coreos/hyperkube:#KUBELET_VERSION#
+    command:
+    - /hyperkube
+    - apiserver
+    - --bind-address=0.0.0.0
+    - --etcd-servers=https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379
+    - --allow-privileged=true
+    - --service-cluster-ip-range=#CLUSTER_NETWORK#
+    - --secure-port=443
+    - --insecure-port=8080
+    - --advertise-address=#THIS_NODE_IP#
+    - --storage-backend=etcd3
+    - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota
+    - --etcd-certfile=#ETCDCTL_CERT_FILE1#
+    - --etcd-keyfile=#ETCDCTL_KEY_FILE1#
+    - --tls-cert-file=#ETCDCTL_CERT_FILE1#
+    - --tls-private-key-file=#ETCDCTL_KEY_FILE1#
+    - --kubelet-client-certificate=#ETCDCTL_CERT_FILE1#
+    - --kubelet-client-key=#ETCDCTL_KEY_FILE1#
+    - --service-account-key-file=#ETCDCTL_KEY_FILE1#
+    - --etcd-cafile=#CA_FILE2#
+    - --tls-ca-file=#CA_FILE2#
+    - --client-ca-file=#CA_FILE2#
+    - --runtime-config=extensions/v1beta1/networkpolicies=true,extensions/v1beta1=true
+    - --anonymous-auth=false
+    - --audit-log-path=/var/log/kubernetes/kube-apiserver-audit.log
+    - --audit-log-maxage=30
+    - --audit-log-maxbackup=3
+    - --audit-log-maxsize=100
+    - --v=3
+    livenessProbe:
+      httpGet:
+        host: 127.0.0.1
+        port: 8080
+        path: /healthz
+      initialDelaySeconds: 15
+      timeoutSeconds: 15
+    ports:
+    - containerPort: 443
+      hostPort: 443
+      name: https
+    - containerPort: 8080
+      hostPort: 8080
+      name: local
+    volumeMounts:
+    - mountPath: #SSL_DIR#
+      name: ssl-certs-kubernetes
+      readOnly: true
+    - mountPath: /etc/ssl/certs
+      name: ssl-certs-host
+      readOnly: true
+    - mountPath: /var/log/kubernetes
+      name: var-log-kubernetes
+      readOnly: false
+  volumes:
+  - hostPath:
+      path: #SSL_DIR#
+    name: ssl-certs-kubernetes
+  - hostPath:
+      path: /usr/share/ca-certificates
+    name: ssl-certs-host
+  - hostPath:
+      path: /var/log/kubernetes
+    name: var-log-kubernetes

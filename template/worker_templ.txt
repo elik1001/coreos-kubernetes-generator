@@ -1,0 +1,516 @@
+---
+storage:
+  files:
+    - filesystem: "root"
+      path:       "/etc/metadata/coreos"
+      mode:       0644
+      contents:
+        inline: |
+          COREOS_VAGRANT_VIRTUALBOX_PRIVATE_IPV4=#THIS_NODE_IP#
+          COREOS_VAGRANT_VIRTUALBOX_HOSTNAME=#THIS_NODE#
+    - filesystem: "root"
+      path:       "/etc/hostname"
+      mode:       0644
+      contents:
+        inline: #THIS_NODE#
+    - filesystem: "root"
+      path:       "/etc/hosts"
+      mode:       0644
+      contents:
+        inline: |
+          127.0.0.1	localhost
+          ::1		localhost
+          #NODE1_IP# #NODE1# #NODE1#.#DOMAIN#
+          #NODE2_IP# #NODE2# #NODE2#.#DOMAIN#
+          #NODE3_IP# #NODE3# #NODE3#.#DOMAIN#
+    - path: #CA_FILE4#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#CA_CERT#
+    - path: /etc/docker/server.pem
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_NODE#
+    - path: /etc/docker/server-key.pem
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_KEY#
+    - path: "/etc/motd"
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: | 
+          #MOTD#
+    - path: /etc/environment
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          COREOS_VAGRANT_VIRTUALBOX_PRIVATE_IPV4=#THIS_NODE_IP#
+          COREOS_VAGRANT_VIRTUALBOX_HOSTNAME=#THIS_NODE#
+          ADVERTISE_IP=#THIS_NODE_IP#
+          COREOS_PRIVATE_IPV4=#THIS_NODE_IP#
+          ETCDCTL_SSL_DIR=#SSL_DIR#
+          ETCD_SSL_DIR=#SSL_DIR#
+          ETCDCTL_CA_FILE=#CA_FILE1#
+          ETCDCTL_CERT_FILE=#ETCDCTL_CERT_FILE1#
+          ETCDCTL_KEY_FILE=#ETCDCTL_KEY_FILE1#
+          ETCDCTL_ENDPOINTS="https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
+          ETCD_ENDPOINTS="https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
+          FLANNELD_ETCD_ENDPOINTS="https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
+          FLANNELD_IFACE="#FLANNELD_IFACE#"
+          FLANNELD_ETCD_PREFIX="#FLANNELD_ETCD_PREFIX#"
+          LOCKSMITHCTL_ETCD_CAFILE=#CA_FILE1#
+          LOCKSMITHCTL_ETCD_CERTFILE=#ETCDCTL_CERT_FILE1#
+          LOCKSMITHCTL_ETCD_KEYFILE=#ETCDCTL_KEY_FILE1#
+          LOCKSMITHCTL_ENDPOINT="https://#THIS_NODE_IP#:2379"
+          HTTP_PROXY=#HTTP_PROXY2#
+          HTTPS_PROXY=#HTTPS_PROXY2#
+          http_proxy=#HTTP_PROXY1#
+          https_proxy=#HTTPS_PROXY1#
+          no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+    - path: /etc/systemd/system.conf.d/10-default-env.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Manager]
+          DefaultEnvironment=http_proxy=#HTTP_PROXY1#
+          DefaultEnvironment=https_proxy=#HTTPS_PROXY1#
+          DefaultEnvironment=HTTP_PROXY=#HTTP_PROXY2#
+          DefaultEnvironment=HTTPS_PROXY=#HTTPS_PROXY2#
+          DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
+    - path: /etc/systemd/system/docker.service.d/environment.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Service]
+          EnvironmentFile=/etc/environment
+    - path: /etc/systemd/timesyncd.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Time]
+          NTP=#TIME#
+    - path: #CA_FILE2#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#CA_CERT#
+    - path: #CA_FILE1#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#CA_CERT#
+    - path: #CA_FILE3#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#CA_CERT#
+    - path: #ETCDCTL_CERT_FILE2#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_NODE#
+    - path: #ETCDCTL_KEY_FILE2#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_KEY#
+    - path: #ETCDCTL_CERT_FILE1#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_NODE#
+    - path: #ETCDCTL_KEY_FILE1#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_KEY#
+    - path: /etc/profile.d/aliases.sh
+      filesystem: root
+      mode: 0755
+      contents:
+        inline: |
+          dps () { docker ps -a ; }
+          dl () { docker logs -f $1 & }
+          drm () { docker stop $1 && docker rm $1; }
+          PATH=$PATH:/opt/bin
+    - path: /etc/flannel/options.env
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          # ETCDCTL parameters
+          ADVERTISE_IP=${ADVERTISE_IP}
+          ETCDCTL_CA_FILE=#CA_FILE1#
+          ETCDCTL_CERT_FILE=#ETCDCTL_CERT_FILE1#
+          ETCDCTL_KEY_FILE=#ETCDCTL_KEY_FILE1#
+          ETCDCTL_ENDPOINTS="https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
+          FLANNELD_IFACE="#FLANNELD_IFACE#"
+          FLANNELD_ETCD_ENDPOINTS=${ETCDCTL_ENDPOINTS}
+          FLANNELD_ETCD_PREFIX="#FLANNELD_ETCD_PREFIX#"
+    - path: /etc/systemd/system/docker.service.d/40-flannel.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Unit]
+          Requires=flanneld.service
+          After=flanneld.service
+          [Service]
+          EnvironmentFile=/etc/kubernetes/cni/docker_opts_cni.env
+    - path: /etc/kubernetes/cni/docker_opts_cni.env
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          DOCKER_OPT_BIP="#DOCKER_OPT_BIP#"
+          DOCKER_OPT_IPMASQ="#DOCKER_OPT_IPMASQ#"
+    - path: /etc/kubernetes/cni/net.d/10-containernet.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          {
+              "name": "podnet",
+              "type": "flannel",
+              "delegate": {
+                  "forceAddress": true,
+                  "isDefaultGateway": true,
+                  "hairpinMode": true
+              }
+          }
+    - path: /etc/systemd/system/flanneld.service.d/40-ExecStartPre-symlink.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Service]
+          ExecStartPre=/usr/bin/ln -sf /etc/flannel/options.env /run/flannel/options.env
+          ExecStartPre=/usr/bin/ln -sf /etc/kubernetes/cni/net.d /etc/rkt/net.d
+    - path: /etc/kubernetes/kubelet.env
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
+          KUBELET_VERSION=#KUBELET_VERSION#
+    - path: /etc/kubernetes/kubeconfig.yaml 
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          apiVersion: v1
+          kind: Config
+          clusters:
+          - name: local
+            cluster:
+              server: https://#NODE1_IP#:443
+              certificate-authority: #CA_FILE3#
+          users:
+          - name: kubelet
+            user:
+              client-certificate: #ETCDCTL_CERT_FILE2#
+              client-key: #ETCDCTL_KEY_FILE2#
+          contexts:
+          - context:
+              cluster: local
+              user: kubelet
+    - path: /etc/kubernetes/manifests/kube-proxy.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#KUBEPROX#
+
+passwd:
+  users:
+    - name: #USER#
+      password_hash: "#PASSWD#"
+      ssh_authorized_keys:
+        - "#SSH_KEY#"
+      home_dir: /home/#USER#
+      groups:
+        - sudo
+        - docker
+      shell: /bin/bash
+
+systemd:
+  units:
+    - name: docker-tcp.socket
+      enabled: false
+      contents: |
+        [Unit]
+        Description=Docker Socket for the API
+
+        [Socket]
+        ListenStream=2375
+        BindIPv6Only=both
+        Service=docker.service
+
+        [Install]
+        WantedBy=sockets.target
+
+    - name: docker.service
+      enabled: false
+      dropins:
+        - name: 50-insecure-registry.conf
+          contents: |
+            [Service]
+            Environment=DOCKER_OPTS='#DOCKER_OPTS#'
+            Environment=HTTP_PROXY=#HTTP_PROXY2#
+            Environment=HTTPS_PROXY=#HTTPS_PROXY2#
+            Environment=http_proxy=#HTTP_PROXY1#
+            Environment=https_proxy=#HTTPS_PROXY1#
+            Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+
+    - name: flanneld.service
+      dropins:
+        - name: 50-network-config.conf
+          contents: |
+            [Service]
+            EnvironmentFile=/etc/flannel/options.env
+            # Used in master config
+            #ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "#CIDR_NETWORK#", "SubnetLen": 24, "Backend": { "Type": "vxlan", "VNI": 1 } }'
+            # VXlan/VNI/VLan example
+            #ExecStartPre=/usr/bin/etcdctl ${CA} ${CERT} ${KEY} ${EP} set /coreos.com/network/red-db/config '{ "Network": "10.220.0.0/16", "SubnetLen": 24, "SubnetMin": "10.220.110.0", "SubnetMax": "10.220.200.0", "Backend": { "Type": "vxlan", "VNI": 6 } }'
+            #ExecStartPre=/usr/bin/etcdctl ${CA} ${CERT} ${KEY} ${EP} set /coreos.com/network/red-app/config '{ "Network": "10.220.0.0/16", "SubnetLen": 24, "SubnetMin": "10.220.110.0", "SubnetMax": "10.220.200.0", "Backend": { "Type": "vxlan", "VNI": 5 } }'
+            # This is needed for rkt to start due to some bug
+            ExecStartPre=/usr/bin/rkt trust --skip-fingerprint-review --prefix=coreos.com/rkt/stage1-coreos
+            ExecStartPre=/usr/bin/rkt image fetch coreos.com/rkt/stage1-coreos:1.29.0
+            Restart=always
+
+    - name: flanneld.service
+      dropins:
+        - name: 50-ssl.conf
+          contents: |
+            [Service]
+            Environment="ETCD_SSL_DIR=#SSL_DIR#"
+
+    - name: etcd-member-config.service
+      enabled: true
+      contents: |
+        [Unit]
+        Before=network-pre.target
+        Wants=network-pre.target
+
+        [Service]
+        Type=oneshot
+        ExecStart=/usr/bin/ln -sf /etc/metadata/coreos /run/metadata/coreos
+        TimeoutSec=0
+        RemainAfterExit=yes
+
+        [Install]
+        WantedBy=network.target
+
+    - name: rkt-api-tcp.socket
+      enabled: true
+      contents: |
+        [Unit]
+        Description=rkt api service socket
+        PartOf=rkt-api.service
+
+        [Socket]
+        ListenStream=127.0.0.1:15441
+        Service=rkt-api.service
+        BindIPv6Only=both
+
+        [Install]
+        WantedBy=sockets.target
+
+    - name: rkt-api.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=rkt api service
+        Documentation=http://github.com/rkt/rkt
+        After=network.target rkt-api-tcp.socket
+        Requires=rkt-api-tcp.socket
+
+        [Service]
+        ExecStart=/usr/bin/rkt api-service --local-config=/etc/rkt
+
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: rkt-gc.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Garbage Collection for rkt
+
+        [Service]
+        Environment=GRACE_PERIOD=24h
+        Type=oneshot
+        ExecStart=/usr/bin/rkt gc --grace-period=${GRACE_PERIOD}
+
+    - name: rkt-gc.timer
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Periodic Garbage Collection for rkt
+
+        [Timer]
+        OnActiveSec=0s
+        OnUnitActiveSec=12h
+
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: rkt-metadata.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=rkt metadata service
+        Documentation=http://github.com/rkt/rkt
+        After=network.target rkt-metadata.socket
+        Requires=rkt-metadata.socket
+
+        [Service]
+        ExecStart=/usr/bin/rkt metadata-service
+
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: rkt-metadata.socket
+      enabled: true
+      contents: |
+        [Unit]
+        Description=rkt metadata service socket
+        PartOf=rkt-metadata.service
+
+        [Socket]
+        ListenStream=/run/rkt/metadata-svc.sock
+        SocketMode=0660
+        SocketUser=root
+        SocketGroup=root
+        RemoveOnStop=true
+
+        [Install]
+        WantedBy=sockets.target
+
+    - name: kubelet.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=The primary agent to run pods
+        Documentation=http://kubernetes.io/docs/admin/kubelet/
+        Requires=etcd-member.service
+        After=flanneld.service
+        
+        [Service]
+        Slice=system.slice
+        Environment=KUBELET_IMAGE_TAG=#KUBELET_VERSION#
+        #Environment=HTTP_PROXY=#HTTP_PROXY2#
+        #Environment=HTTPS_PROXY=#HTTPS_PROXY2#
+        #Environment=http_proxy=#HTTP_PROXY1#
+        #Environment=https_proxy=#HTTPS_PROXY1#
+        #Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+        ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
+        ExecStartPre=/usr/bin/mkdir -p /var/log/containers
+        ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d
+        ExecStartPre=/usr/bin/mkdir -p /opt/cni/bin
+        ExecStartPre=/usr/bin/mkdir -p /var/lib/cni
+        Environment="RKT_RUN_ARGS=--uuid-file-save=/var/run/kubelet-pod.uuid \
+          --net=host \
+          --dns=host \
+          --set-env-file=/etc/environment \
+          --volume var-lib-rkt,kind=host,source=/var/lib/rkt \
+          --mount volume=var-lib-rkt,target=/var/lib/rkt \
+          --volume dns,kind=host,source=/etc/resolv.conf \
+          --mount volume=dns,target=/etc/resolv.con \
+          --volume var-lib-cni,kind=host,source=/var/lib/cni \
+          --mount volume=var-lib-cni,target=/var/lib/cni \
+          --volume var-log,kind=host,source=/var/log \
+          --mount volume=var-log,target=/var/log \
+          --volume container,kind=host,source=/var/log/containers \
+          --mount volume=container,target=/var/log/containers \
+          --volume rkt,kind=host,source=/usr/bin/rkt \
+          --mount volume=rkt,target=/usr/bin/rkt"
+        ExecStart=/usr/lib/coreos/kubelet-wrapper \
+          --address="0.0.0.0" \
+          --register-node=true \
+          --container-runtime=rkt \
+          --pod-manifest-path=/etc/kubernetes/manifests \
+          --allow-privileged=true \
+          --cert-dir=/etc/kubernetes/ssl \
+          --tls-cert-file=#ETCDCTL_CERT_FILE2# \
+          --tls-private-key-file=#ETCDCTL_KEY_FILE2# \
+          --client-ca-file=#CA_FILE3# \
+          --kubeconfig=/etc/kubernetes/kubeconfig.yaml \
+          --cluster-dns=#CLUSTER_DNS# \
+          --cluster-domain=cluster.local \
+          --network-plugin=cni \
+          --cni-conf-dir=/etc/kubernetes/cni/net.d \
+          --lock-file=/var/run/lock/kubelet.lock \
+          --exit-on-lock-contention \
+          --cloud-provider="" \
+          --cadvisor-port=4194 \
+          --cgroups-per-qos=true \
+          --cgroup-root=/ \
+          --hostname-override=#THIS_NODE#
+        ExecStop=-/usr/bin/rkt stop --uuid-file=/var/run/kubelet-pod.uuid
+        Restart=always
+        RestartSec=10
+        
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: settimezone.service
+      enabled: true
+      contents: |
+        [Unit]
+        Description=Set the time zone
+
+        [Service]
+        ExecStart=/usr/bin/timedatectl set-timezone America/New_York
+        RemainAfterExit=yes
+        Type=oneshot
+
+networkd:
+  units:
+    - name: 00-eno0.network
+      contents: |
+        [Match]
+        Name=#FLANNELD_IFACE#
+
+        [Network]
+        Address=#THIS_NODE_IP#/24
+        Gateway=#NODE_GW#
+        DNS=#DNS1#
+        DNS=#DNS2#
+        Domains=#DOMAIN#
+
+flannel:
+  version:        0.9.0
+  etcd_prefix:    "/coreos.com/network"
+  etcd_endpoints: "https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
+  etcd_cafile:    #CA_FILE1#
+  etcd_certfile:  #ETCDCTL_CERT_FILE1#
+  etcd_keyfile:   #ETCDCTL_KEY_FILE1#
+  interface:      #FLANNELD_IFACE#
+
+update:
+  group:  "alpha"
+locksmith:
+  reboot_strategy: "etcd-lock"
+  etcd_endpoints:  "https://#THIS_NODE_IP#:2379"
+  etcd_cafile: #CA_FILE1#
+  etcd_certfile: #ETCDCTL_CERT_FILE1#
+  etcd_keyfile: #ETCDCTL_KEY_FILE1#
