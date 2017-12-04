@@ -1,5 +1,5 @@
 # coreos-kubernetes-generator
-This document provides the instructions on how to install, use the Python Kubernetes Generator Script in this repository. the script helps to automate a Kubernetes deployment on CoreOS. See the deployment notes for additional details.
+This document provides instructions on how to install and use the Python Kubernetes Generator Script. the script helps  automate a Kubernetes deployment on CoreOS. See the deployment notes for additional details.
 
 This repository includes the Python Kubernetes Generator Script, as well as pre configured samples.
 <ol>
