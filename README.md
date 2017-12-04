@@ -128,4 +128,4 @@ Once completed just reboot the server (or virtual) and you should be good to go.
 <h4>Known Issues/Troubleshooting</h4>
 
 <h4>License</h4>
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE file for details
