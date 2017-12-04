@@ -1,6 +1,4 @@
 # coreos-kubernetes-generator
-CoreOS Kubernetes Cluster Ignition Generator - This script helps generate a CoreOS kubernetes Ignition configuration.
-
 This document provides the instructions on how to install, use the Python Kubernetes Generator Script in this repository. the script helps to automate a Kubernetes deployment on CoreOS. See the deployment notes for additional details.
 
 This repository includes the Python Kubernetes Generator Script, as well as pre configured samples.
