@@ -1,0 +1,10 @@
+[
+ # Generate the CA private key
+ "openssl genrsa -out ssl/ca-key.pem 2048",
+ "sed -i 's/^CN.*/CN                 = Etcd/g' ssl/cert.conf",
+ # Generate the CA certificate.
+ "openssl req -x509 -new -extensions v3_ca -key ssl/ca-key.pem -days 3650 \
+ -out ssl/ca.pem \
+ -subj '/C=US/ST=New York/L=New York/O=example.com/CN=Etcd' \
+ -config ssl/cert.conf"
+]
