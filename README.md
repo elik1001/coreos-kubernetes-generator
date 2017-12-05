@@ -120,6 +120,8 @@ Use alpha or stable channel.
 Once completed just reboot the server (or virtual) and you should be good to go.
 <h4>To Do's</h4>
 <ol>
+	<li>Complete Documentation</li>
+	<li>Code Optimization</li>
 	<li>Convert SSL subprocess to pure Python code.</li>
 	<li>Convert configuration files (in src directory) to a DB layer.</li>
 	<li>Add include matchbox, PXE, DHCP, as an option for full automation.</li>
