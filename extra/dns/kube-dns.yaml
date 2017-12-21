@@ -1,0 +1,226 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kube-dns
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-dns
+  namespace: kube-system
+  labels:
+    addonmanager.kubernetes.io/mode: EnsureExists
+data:
+  stubDomains: |
+    {"example.com": ["1.2.3.4"]}
+  upstreamNameservers: |
+    ["8.8.8.8", "8.8.4.4"]
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    k8s-app: kube-dns
+    kubernetes.io/cluster-service: "true"
+    kubernetes.io/name: KubeDNS
+  name: kube-dns
+  namespace: kube-system
+spec: 
+  clusterIP: "10.3.0.10"
+  ports: 
+    - 
+      name: dns
+      port: 53
+      protocol: UDP
+      targetPort: 53
+    - 
+      name: dns-tcp
+      port: 53
+      protocol: TCP
+      targetPort: 53
+  selector: 
+    k8s-app: kube-dns
+  sessionAffinity: None
+  type: ClusterIP
+--- 
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  labels: 
+    k8s-app: kube-dns
+    kubernetes.io/cluster-service: "true"
+  name: kube-dns
+  namespace: kube-system
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      k8s-app: kube-dns
+  strategy: 
+    rollingUpdate: 
+      maxSurge: 10%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template: 
+    metadata: 
+      annotations: 
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+      creationTimestamp: ~
+      labels: 
+        k8s-app: kube-dns
+    spec: 
+      containers: 
+        - 
+          args: 
+            - "--domain=cluster.local."
+            - "--dns-port=10053"
+            - "--kube-master-url=https://172.0.2.11:443"
+            - "--config-dir=/kube-dns-config"
+            - "--kubecfg-file=/etc/kubernetes/ssl/worker-kubeconfig.yaml"
+            - "--v=2"
+          env: ~
+          image: "gcr.io/google_containers/k8s-dns-kube-dns-amd64:1.14.7"
+          name: kubedns
+          ports: 
+            - 
+              containerPort: 10053
+              name: dns-local
+              protocol: UDP
+            - 
+              containerPort: 10053
+              name: dns-tcp-local
+              protocol: TCP
+            - 
+              containerPort: 10055
+              name: metrics
+              protocol: TCP
+          resources: 
+            limits: 
+              memory: 170Mi
+            requests: 
+              cpu: 100m
+              memory: 70Mi
+          volumeMounts: 
+            - 
+              mountPath: /kube-dns-config
+              name: kube-dns-config
+            - 
+              mountPath: /etc/ssl/certs
+              name: ssl-certs-host
+              readOnly: true
+            - 
+              mountPath: /etc/kubernetes/ssl
+              name: kube-ssl
+              readOnly: true
+            - 
+              mountPath: /etc/kubernetes/ssl/worker-kubeconfig.yaml
+              name: kubeconfig
+              readOnly: true
+            - 
+              mountPath: /usr/bin/curl
+              name: curl
+              readOnly: true
+        - 
+          args: 
+            - "-v=2"
+            - "-logtostderr"
+            - "-configDir=/etc/k8s/dns/dnsmasq-nanny"
+            - "-restartDnsmasq=true"
+            - "--"
+            - "-k"
+            - "--cache-size=1000"
+            - "--log-facility=-"
+            - "--no-resolv"
+            - "--server=/cluster.local/127.0.0.1#10053"
+            - "--server=/in-addr.arpa/127.0.0.1#10053"
+            - "--server=/ip6.arpa/127.0.0.1#10053"
+            - "--log-queries"
+          image: "gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.7"
+          livenessProbe: 
+            failureThreshold: 5
+            httpGet: 
+              path: /healthcheck/dnsmasq
+              port: 10054
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
+          name: dnsmasq
+          ports: 
+            - 
+              containerPort: 53
+              name: dns
+              protocol: UDP
+            - 
+              containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+          resources: 
+            requests: 
+              cpu: 150m
+              memory: 20Mi
+          volumeMounts: 
+            - 
+              mountPath: /etc/k8s/dns/dnsmasq-nanny
+              name: kube-dns-config
+        - 
+          args: 
+            - "--v=2"
+            - "--logtostderr"
+            - "--probe=kubedns,127.0.0.1:10053,kubernetes.default.svc.cluster.local,5,A"
+            - "--probe=dnsmasq,127.0.0.1:53,kubernetes.default.svc.cluster.local,5,A"
+          image: "gcr.io/google_containers/k8s-dns-sidecar-amd64:1.14.7"
+          livenessProbe: 
+            failureThreshold: 5
+            httpGet: 
+              path: /metrics
+              port: 10054
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 30
+          name: sidecar
+          ports: 
+            - 
+              containerPort: 10054
+              name: metrics
+              protocol: TCP
+          resources: 
+            requests: 
+              cpu: 10m
+              memory: 20Mi
+      dnsPolicy: Default
+      restartPolicy: Always
+      serviceAccount: kube-dns
+      serviceAccountName: kube-dns
+      terminationGracePeriodSeconds: 30
+      tolerations: 
+        - 
+          key: CriticalAddonsOnly
+          operator: Exists
+      volumes: 
+        - 
+          configMap: 
+            defaultMode: 420
+            name: kube-dns
+            optional: true
+          name: kube-dns-config
+        - 
+          hostPath: 
+            path: /usr/share/ca-certificates
+          name: ssl-certs-host
+        - 
+          hostPath: 
+            path: /etc/kubernetes/ssl
+          name: kube-ssl
+        - 
+          hostPath: 
+            path: /etc/kubernetes/ssl/worker-kubeconfig.yaml
+          name: kubeconfig
+        - 
+          hostPath: 
+            path: /usr/bin/curl
+          name: curl

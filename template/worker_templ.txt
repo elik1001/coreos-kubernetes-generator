@@ -72,27 +72,35 @@ storage:
           LOCKSMITHCTL_ENDPOINT="https://#THIS_NODE_IP#:2379"
           HTTP_PROXY=#HTTP_PROXY2#
           HTTPS_PROXY=#HTTPS_PROXY2#
-          http_proxy=#HTTP_PROXY1#
-          https_proxy=#HTTPS_PROXY1#
-          no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+          #http_proxy=#HTTP_PROXY1#
+          #https_proxy=#HTTPS_PROXY1#
+          #no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
     - path: /etc/systemd/system.conf.d/10-default-env.conf
       filesystem: root
       mode: 0644
       contents:
         inline: |
           [Manager]
-          DefaultEnvironment=http_proxy=#HTTP_PROXY1#
-          DefaultEnvironment=https_proxy=#HTTPS_PROXY1#
-          DefaultEnvironment=HTTP_PROXY=#HTTP_PROXY2#
-          DefaultEnvironment=HTTPS_PROXY=#HTTPS_PROXY2#
-          DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
+          #DefaultEnvironment=http_proxy=#HTTP_PROXY1#
+          #DefaultEnvironment=https_proxy=#HTTPS_PROXY1#
+          #DefaultEnvironment=HTTP_PROXY=#HTTP_PROXY2#
+          #DefaultEnvironment=HTTPS_PROXY=#HTTPS_PROXY2#
+          #DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
     - path: /etc/systemd/system/docker.service.d/environment.conf
       filesystem: root
       mode: 0644
       contents:
         inline: |
           [Service]
+          #ExecStartPre=ln -s /run/flannel/flannel_docker_opts.env /etc/kubernetes/cni/docker_opts_cni.env
           EnvironmentFile=/etc/environment
+    - path: /etc/systemd/system/etcd-member.service.d/conf1.conf
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          [Service]
+          EnvironmentFile=/etc/flannel/options.env
     - path: /etc/systemd/timesyncd.conf
       filesystem: root
       mode: 0644
@@ -142,6 +150,18 @@ storage:
       contents:
         inline: |
 #ETCD_KEY#
+    - path: #WORK_CERT_FILE#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_NODE##CA_CERT#
+    - path: #WORK_KEY_FILE#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_KEY#
     - path: /etc/profile.d/aliases.sh
       filesystem: root
       mode: 0755
@@ -165,6 +185,11 @@ storage:
           FLANNELD_IFACE="#FLANNELD_IFACE#"
           FLANNELD_ETCD_ENDPOINTS=${ETCDCTL_ENDPOINTS}
           FLANNELD_ETCD_PREFIX="#FLANNELD_ETCD_PREFIX#"
+          HTTP_PROXY=#HTTP_PROXY2#
+          HTTPS_PROXY=#HTTPS_PROXY2#
+          #http_proxy=#HTTP_PROXY1#
+          #https_proxy=#HTTPS_PROXY1#
+          no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
     - path: /etc/systemd/system/docker.service.d/40-flannel.conf
       filesystem: root
       mode: 0644
@@ -211,6 +236,27 @@ storage:
         inline: |
           KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
           KUBELET_VERSION=#KUBELET_VERSION#
+    - path: /etc/kubernetes/ssl/worker-kubeconfig.yaml 
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          apiVersion: v1
+          kind: Config
+          clusters:
+          - name: local
+            cluster:
+              server: https://#NODE1_IP#:443
+              certificate-authority: #CA_FILE3#
+          users:
+          - name: kubelet
+            user:
+              client-certificate: #ETCDCTL_CERT_FILE2#
+              client-key: #ETCDCTL_KEY_FILE2#
+          contexts:
+          - context:
+              cluster: local
+              user: kubelet
     - path: /etc/kubernetes/kubeconfig.yaml 
       filesystem: root
       mode: 0644
@@ -237,7 +283,7 @@ storage:
       mode: 0644
       contents:
         inline: |
-#KUBEPROX#
+#WORK_KUBEPROX#
 
 passwd:
   users:
@@ -274,11 +320,11 @@ systemd:
           contents: |
             [Service]
             Environment=DOCKER_OPTS='#DOCKER_OPTS#'
-            Environment=HTTP_PROXY=#HTTP_PROXY2#
-            Environment=HTTPS_PROXY=#HTTPS_PROXY2#
-            Environment=http_proxy=#HTTP_PROXY1#
-            Environment=https_proxy=#HTTPS_PROXY1#
-            Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+            #Environment=HTTP_PROXY=#HTTP_PROXY2#
+            #Environment=HTTPS_PROXY=#HTTPS_PROXY2#
+            #Environment=http_proxy=#HTTP_PROXY1#
+            #Environment=https_proxy=#HTTPS_PROXY1#
+            #Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
 
     - name: flanneld.service
       dropins:
@@ -302,22 +348,6 @@ systemd:
           contents: |
             [Service]
             Environment="ETCD_SSL_DIR=#SSL_DIR#"
-
-    - name: etcd-member-config.service
-      enabled: true
-      contents: |
-        [Unit]
-        Before=network-pre.target
-        Wants=network-pre.target
-
-        [Service]
-        Type=oneshot
-        ExecStart=/usr/bin/ln -sf /etc/metadata/coreos /run/metadata/coreos
-        TimeoutSec=0
-        RemainAfterExit=yes
-
-        [Install]
-        WantedBy=network.target
 
     - name: rkt-api-tcp.socket
       enabled: true
@@ -411,17 +441,17 @@ systemd:
         [Unit]
         Description=The primary agent to run pods
         Documentation=http://kubernetes.io/docs/admin/kubelet/
-        Requires=etcd-member.service
+        Requires=flanneld.service
         After=flanneld.service
         
         [Service]
         Slice=system.slice
         Environment=KUBELET_IMAGE_TAG=#KUBELET_VERSION#
-        #Environment=HTTP_PROXY=#HTTP_PROXY2#
-        #Environment=HTTPS_PROXY=#HTTPS_PROXY2#
+        Environment=HTTP_PROXY=#HTTP_PROXY2#
+        Environment=HTTPS_PROXY=#HTTPS_PROXY2#
         #Environment=http_proxy=#HTTP_PROXY1#
         #Environment=https_proxy=#HTTPS_PROXY1#
-        #Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+        Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
         ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/usr/bin/mkdir -p /var/log/containers
         ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d
@@ -491,14 +521,14 @@ networkd:
         Name=#FLANNELD_IFACE#
 
         [Network]
-        Address=#THIS_NODE_IP#/24
+        Address=#THIS_NODE_IP#/20
         Gateway=#NODE_GW#
         DNS=#DNS1#
         DNS=#DNS2#
         Domains=#DOMAIN#
 
 flannel:
-  version:        0.9.0
+  version:        0.9.1
   etcd_prefix:    "/coreos.com/network"
   etcd_endpoints: "https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
   etcd_cafile:    #CA_FILE1#
@@ -509,7 +539,7 @@ flannel:
 update:
   group:  "alpha"
 locksmith:
-  reboot_strategy: "etcd-lock"
+  reboot_strategy: "reboot"
   etcd_endpoints:  "https://#THIS_NODE_IP#:2379"
   etcd_cafile: #CA_FILE1#
   etcd_certfile: #ETCDCTL_CERT_FILE1#

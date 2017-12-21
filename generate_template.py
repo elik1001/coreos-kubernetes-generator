@@ -2,8 +2,8 @@
 #title           :generate_template.py
 #description     :This will create a header for a python script.
 #author          :Eli Kleinman
-#date            :20171204
-#version         :0.1
+#date            :20171219
+#version         :0.2
 #usage           :python generate_template.py
 #notes           :
 #python_version  :2.7.14
@@ -17,23 +17,25 @@ os.environ['PATH'] += os.pathsep + '.'
 user_acct = 'usera'
 password = 'Admin_Password'
 replace_template = 'tmp/modifylist.txt'
-url = 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.5.0/ct-v0.5.0-x86_64-unknown-linux-gnu'
+ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.5.0/ct-v0.5.0-x86_64-unknown-linux-gnu'
+kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl'
 cert_config = 'cert.conf'
 msg_list = 'src/msg_list'
-required_pkgs = [
-    're', 
-    'ast', 
-    'pwd', 
-    'uuid', 
-    'crypt', 
-    'shutil', 
-    'pprint',
-    'getpass', 
-    'requests', 
-    'subprocess', 
-    'inquirer',
-    'Crypto.PublicKey.RSA',
-]
+required_pkgs = {
+    're': ['re'],
+    'ast': ['ast'],
+    'pwd': ['pwd'],
+    'uuid': ['uuid'],
+    'crypt': ['crypt'],
+    'shutil': ['shutil'],
+    'pprint': ['pprint'],
+    'getpass': ['getpass'],
+    'requests': ['requests'],
+    'platform': ['platform'],
+    'subprocess': ['subprocess'],
+    'inquirer': ['inquirer'],
+    'pycryptodome': ['Crypto.PublicKey.RSA']
+}
 files_to_prep = [
     'modifylist.txt', 
     'master_templ.txt', 
@@ -41,8 +43,9 @@ files_to_prep = [
 ]
 manifests_files = [
     'kube-apiserver.yaml', 
-    'kube-controller-manager.yaml', 
-    'kube-proxy.yaml', 
+    'kube-controller-manager.yaml',
+    'kube-proxy-master.yaml',
+    'kube-proxy-work.yaml',
     'kube-scheduler.yaml',
 ]
 dir_list = [
@@ -118,16 +121,16 @@ def load_lists(dict_file, dict_var):
 #=====================================
 # Downloading the CT Utility
 
-def download_ct(url, file_name):
+def download_app(url, file_name):
 
     with open(file_name, 'wb') as file:
       response = requests.get(url)
       file.write(response.content)
       os.chmod(file_name, 0o755)
 
-def ct_exists(ct):
+def app_exists(app):
     return any(
-      os.path.exists(os.path.join(path, ct))
+      os.path.exists(os.path.join(path, app))
       for path in os.environ['PATH'].split(os.pathsep)
     )
 
@@ -222,7 +225,7 @@ def ext_cmd(cmd):
 #=====================================
 # SSL and CT log output
 def logger(log):
-    f = open('ssl_output.log', 'a+')
+    f = open('output.log', 'a+')
     f.write(log + '\n')
     sys.stdout.flush()
     f.close()
@@ -262,7 +265,10 @@ def inplace_change(repl_type, repl_keyname, sfilepath, filecount, filetomodify):
     todata = f.read()
     f.close()
 
-    newdata = todata.replace(repl_keyname, x)
+    if 'PROXY1@' in filecount or 'PROXY2@' in filecount:
+      newdata = todata.replace(repl_keyname, sfilepath + "=")
+    else:
+      newdata = todata.replace(repl_keyname, x)
     f = open(filetomodify, 'w')
     f.write(newdata)
     f.close()
@@ -271,8 +277,9 @@ def inplace_change(repl_type, repl_keyname, sfilepath, filecount, filetomodify):
 # Modify Host / IP Address
 
 def modify_source(update_source, x, y):
-    update_source = update_source.replace(x, y)
-    return update_source
+    if y is not None:
+      update_source = update_source.replace(x, y)
+      return update_source
 
 def prepare_source(update_source, i, host_name, ip_addr):
 
@@ -316,7 +323,8 @@ def mod_global_set(global_settings, i, x):
 def mod_prop_list(gs, update):
     if update == 'n':
       for i in sorted(gs, key=lambda s: s.lower()):
-        print_msg(gs[i][0]), print_msg(':'), print_msg(gs[i][1]), print_msg('\n')
+        if gs[i][1] is not None:
+          print_msg(gs[i][0]), print_msg(':'), print_msg(gs[i][1]), print_msg('\n')
     else:
       alt_name = ""
       if update == 'DNS':
@@ -372,7 +380,6 @@ def ignition_platform():
 def create_ignition(server_template, ign_template):
     ign_cmd = 'ct -in-file ' + server_template + ' -platform ' \
               + ignition_platform() + ' -out-file ' + ign_template
-    print 'ign_cmd: ' + ign_cmd
 
     ign_output = subprocess.Popen(ign_cmd, shell=True,
                            stdout=subprocess.PIPE,
@@ -414,6 +421,16 @@ def update_dict_src(dict_update, file_dst):
     with open(file_dst, 'wt') as out:
       pprint.pprint(dict_update, stream=out)
 
+#=======================================
+# Check for mkisofs utility
+def install_platform_pkg():
+    if 'Ubuntu' in platform.dist()[0]:
+       print_msg(['96'])
+       return "apt-get -y install genisoimage"
+    elif 'redhat' in platform.dist()[0]:
+       print_msg(['97'])
+       return "yum -y install mkisofs"
+
 # ===========================================================
 #    ******************** Main *************************
 # ===========================================================
@@ -424,7 +441,7 @@ print 'Verifying required python modules \
 \n-----------------------------------------------------------'
 for pkg in required_pkgs:
   try:
-    globals()[pkg] = __import__(pkg)
+    globals()[required_pkgs[pkg][0]] = __import__(required_pkgs[pkg][0])
     print 'Skipping module: ' + pkg + ', already installed'
   except ImportError, e:
     print '\n-----------------------------------------------------------'
@@ -434,7 +451,7 @@ for pkg in required_pkgs:
       print 'Installing missing module: ' + pkg
       with suppress_stdout():
         pip.main(['install', pkg])
-        globals()[pkg] = __import__(pkg)
+        globals()[required_pkgs[pkg][0]] = __import__(required_pkgs[pkg][0])
     else:
       print '\n----------------------------------------------------------- \
       \nMissing required module(s), exiting safely'
@@ -499,9 +516,9 @@ print_msg(['10'])
 #-------------------------------------
 print_msg(['28'])
 
-if not ct_exists('ct'):
+if not app_exists('ct'):
   print_msg(['29'])
-  download_ct(url, 'ct')
+  download_app(ct_url, 'ct')
   print_msg(['30'])
 else:
   print_msg(['31'])
@@ -514,9 +531,33 @@ user_account = raw_input(print_msg(['return1', '34'])) or user_acct
 
 pass_hash = gen_pass_hash(user_account, password)
 
+# Setup http_proxy
+#-------------------------------------
+print_msg(['8'])
+print_msg(['98']), print_msg(['99']), print_msg(['100']), print_msg(['101'])
+print_msg(['8'])
+global_mod_yn = mod_set_yn(print_msg(['return1', '102']), False)
+print_msg(['10'])
+if global_mod_yn:
+  if global_settings['#HTTP_PROXY2@'][1]:
+    proxy_addr = re.split(':|@|/', global_settings['#HTTP_PROXY2@'][1])[-2]
+    proxy_port =  re.split(':|@|/', global_settings['#HTTP_PROXY2@'][1])[-1]
+  proxy_addr = raw_input(print_msg(['return1', '103'])) or proxy_addr
+  proxy_port = raw_input(print_msg(['return1', '104'])) or proxy_port
+  print_msg(['105'])
+  proxy_account = raw_input(print_msg(['return1', '106']))
+  if proxy_account:
+    user_passwd = getpass.getpass(print_msg(['return1', '107']))
+    global_settings['#HTTP_PROXY2@'][1] = "HTTP_PROXY=http://"+proxy_account+":"+user_passwd+"@"+proxy_addr+":"+proxy_port
+    global_settings['#HTTPS_PROXY2@'][1] = "HTTPS_PROXY=http://"+proxy_account+":"+user_passwd+"@"+proxy_addr+":"+proxy_port
+    print_msg(['10'])
+  else:
+    global_settings['#HTTP_PROXY2@'][1] = "HTTP_PROXY=http://"+proxy_addr+":"+proxy_port
+    global_settings['#HTTPS_PROXY2@'][1] = "HTTPS_PROXY=http://"+proxy_addr+":"+proxy_port
+    print_msg(['10'])
+
 # Generating ssh keys - needs pycrypto
 #-------------------------------------
-#print_msg(['35']), print_msg(['10'])
 priv_key, pub_key = create_ssh_key()
 print_msg(['36'])
 
@@ -557,7 +598,8 @@ global_mod_yn = mod_set_yn(print_msg(['return1', '49']), False)
 if global_mod_yn:
   print_msg(['50']), print_msg(['51']), print_msg(['52']), print_msg(['10'])
   for i in sorted(global_settings, key=lambda s: s.lower()):
-    global_settings = mod_global_set(global_settings, i, global_settings[i][1])
+    if global_settings[i][1] is not None:
+      global_settings = mod_global_set(global_settings, i, global_settings[i][1])
 
   print_msg(['10'])
   print_msg(['53']), print_msg(['10'])
@@ -568,7 +610,8 @@ else:
 
 print_msg(['10']), print_msg(['57']), print_msg(['10'])
 for i in sorted(global_settings, key=lambda s: s.lower()):
-  update_source = modify_source(update_source, i, global_settings[i][1])
+  if global_settings[i][1]:
+    update_source = modify_source(update_source, i, global_settings[i][1])
 update_dict_src(global_settings, dict_list['global_settings'][0])
 
 # Write all changes to template file
@@ -615,7 +658,7 @@ global_mod_yn = mod_set_yn(print_msg(['return1', '49']), False)
 if global_mod_yn:
    print_msg(['50']), print_msg(['51']), print_msg(['10'])
    for i in sorted(ip_cert_list, key=lambda s: s.lower()):
-     srv_cert_list = mod_global_set(ip_cert_list, i, ip_cert_list[i][1])
+     ip_cert_list = mod_global_set(ip_cert_list, i, ip_cert_list[i][1])
 
 update_dict_src(srv_cert_list, dict_list['srv_cert_list'][0])
 
@@ -669,7 +712,35 @@ print_msg(this_host_name), sys.stdout.write(''), print_msg(['75'])
 prep_template(server_template, 'configs/' + this_host_name + '_template.yaml', 'mv')
 
 print_msg(['10']), print_msg(['76']), print_msg(['10'])
+
+# Install mkisofs if not available
+#-------------------------------------
+print_msg(['92'])
+if not app_exists('mkisofs'):
+  print_msg(['93'])
+  ext_cmd(install_platform_pkg())
+  print_msg(['94'])
+else:
+  print_msg(['95'])
+
+print_msg(['77']), print_msg(['10'])
 ext_cmd('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
+
+# Download Kubectl if not available
+#-------------------------------------
+print_msg(['85'])
+
+if not app_exists('kubectl'):
+  print_msg(['86'])
+  download_app(kubectl_url, 'kubectl')
+  print_msg(['87'])
+else:
+  print_msg(['88'])
+print_msg(['10'])
+print_msg(['89']), print_msg(['90'])
+print_msg(['10'])
+print_msg(['91'])
+print_msg(['10'])
 
 #-------------------------------------
 # Print summary information

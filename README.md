@@ -29,6 +29,8 @@ shutil,
 pprint,
 getpass,   
 requests,   
+pycryptodome,
+platform,
 subprocess,   
 inquirer,
 from contextlib import contextmanager
@@ -42,11 +44,11 @@ To use the application just run the <i>./generate_template.py</i>.
 <b>Example</b>
 You can leave most of the default values by just hitting enter - (Just replace the IP's, Hostnames if needed..).
 
-<b>The default Hostname and IP Adress are below</b>
+<b>The default network settings are below</b>
 <table class="blueTable" style="width: 50%;" border="2">
 <thead>
 <tr>
-<th style="text-align: center;" colspan="2">CoreOS Cluster IP Address</th>
+<th style="text-align: center;" colspan="2">Cluster IP Address</th>
 </tr>
 </thead>
 <tbody>
@@ -57,17 +59,78 @@ You can leave most of the default values by just hitting enter - (Just replace t
 </tr>
 <tr>
 <td>&nbsp;coreos1</td>
-<td>&nbsp;10.0.2.11/20</td>
+<td>&nbsp;172.20.0.11/20</td>
 </tr>
 <tr>
 <td>&nbsp;coreos2</td>
-<td>&nbsp;10.0.2.12/20</td>
+<td>&nbsp;172.20.0.12/20</td>
 </tr>
 <tr>
 <td>&nbsp;coreos3</td>
-<td>&nbsp;10.0.2.13/20</td>
+<td>&nbsp;172.20.0.13/20</td>
 </tr>
 <tr>
+<td>&nbsp;worker1</td>
+<td>&nbsp;172.20.0.51/20</td>
+</tr>
+<tr>
+<td>&nbsp;worker2</td>
+<td>&nbsp;172.20.0.52/20</td>
+</tr>
+<tr>
+<td>&nbsp;worker3</td>
+<td>&nbsp;172.20.0.53/20</td>
+</tr>
+<tr>
+<td>&nbsp;Default Gateway</td>
+<td>&nbsp;172.20.0.1</td>
+</tr>
+</tbody>
+<thead>
+<tr>
+<th style="text-align: center;" colspan="2">Cluster Network Ranges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>&nbsp;Name</b></td>
+<td><b>&nbsp;Range</b></td>
+</tr>
+<tr>
+<td>&nbsp;Pod CIDR</td>
+<td>&nbsp;172.20.0.0/20</td>
+</tr>
+<tr>
+<td>&nbsp;Cluster CIDR</td>
+<td>&nbsp;10.20.0.0/21</td>
+</tr>
+</tbody>
+<thead>
+<tr>
+<th style="text-align: center;" colspan="2">DNS Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>&nbsp;Name</b></td>
+<td><b>&nbsp;IP Address</b></td>
+</tr>
+<tr>
+<td>&nbsp;Google DNS1</td>
+<td>&nbsp;8.8.8.8</td>
+</tr>
+<tr>
+<td>&nbsp;Google DNS2</td>
+<td>&nbsp;8.8.4.4</td>
+</tr>
+<tr>
+<td>&nbsp;Cluster DNS <br>(requires kube-dns)</td>
+<td>&nbsp;10.3.0.10</td>
+</tr>
+<tr>
+<td>&nbsp;Default Domain Name</td>
+<td>&nbsp;example.com</td>
+</tr>
 </tbody>
 </table>
 
@@ -104,6 +167,8 @@ The script generates the below list of files and Directories.
 <h4>Additional Details</h4>
 You can use the ign (or ISO with ign file) in a verity of ways.
 If you are using bear-metal or virtual box, an example is explained below.
+
+First, configure VirtualBox Networking. for more details you can follow this <a href="docs/VirtualBox/README">document</a>.
 
 Boot from a CoreOS ISO/CD/USB which already contains the <i>coreos-install</i> script or use any bootable CD, then download the CoreOS <i>coreos-install</i> script from <a href="https://raw.github.com/coreos/init/master/bin/coreos-install" rel="nofollow">here</a>.
 

@@ -1,0 +1,30 @@
+<h1>Adding kube-dns to your cluster</h1>
+
+Download the <i>kube-dns.yaml</i> template, and run the below
+<pre>
+kubectl create -f kube-dns.yaml
+</pre>
+<i>Note: </i>The <i>kube-dns.yaml</i> does not include the live checks, since I was not able to make it work,
+<br>if you like to use with the live health checks, use the <i>kube-dns.yaml-with-health-check</i> template.
+
+<p>To scale to from one pod to 2, just run the below.</p>
+<pre>
+kubectl scale deployment/kube-dns --replicas=2 -n kube-system
+</pre>
+
+<p>To remove the kube-dns pod</p>
+<pre>
+kubectl delete -f kube-dns.yaml
+</pre>
+Or
+<pre>
+kubectl delete deployment kube-dns -n kube-system
+kubectl delete service kube-dns -n kube-system
+kubectl delete configmap kube-dns -n kube-system
+kubectl delete serviceaccount kube-dns -n kube-system
+</pre>
+
+To troubleshoot kube-dns pod logs, just run something like the below. 
+<pre>
+kubectl logs `kubectl get po --all-namespaces -o wide|grep kube-dns|grep worker|awk '{print $2}'` -n kube-system kubedns -f
+</pre>

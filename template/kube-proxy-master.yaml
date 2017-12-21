@@ -14,7 +14,8 @@ spec:
         command:
         - ./hyperkube
         - proxy
-        - --master=http://127.0.0.1:8080
+        - --master=https://#THIS_NODE_IP#:443
+        - --kubeconfig=#KUBECONFIG#
         - --logtostderr=true
         - --proxy-mode=iptables
         - --hostname-override=#THIS_NODE_IP#
@@ -31,8 +32,8 @@ spec:
         - mountPath: /etc/ssl/certs
           name: ssl-certs-host
           readOnly: true
-        - name: etc-kubernetes
-          mountPath: #SSL_DIR#
+        - name: kube-ssl
+          mountPath: #KUB_SSL_DIR#
           readOnly: true
       tolerations:
       - key: "node-role.kubernetes.io/master"
@@ -42,6 +43,6 @@ spec:
       - hostPath:
           path: /usr/share/ca-certificates
         name: ssl-certs-host
-      - name: etc-kubernetes
+      - name: kube-ssl
         hostPath:
-          path: /etc/kubernetes
+          path: #KUB_SSL_DIR#

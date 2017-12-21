@@ -10,9 +10,14 @@
                {"manifests/kube-controller-manager.yaml": "/etc/kubernetes/manifests/kube-controller-manager.yaml"}
              ]
            },
-           { "#KUBEPROX#": 
+           { "#MASTER_KUBEPROX#": 
              [
-               {"manifests/kube-proxy.yaml": "/etc/kubernetes/manifests/kube-proxy.yaml"}
+               {"manifests/kube-proxy-master.yaml": "/etc/kubernetes/manifests/kube-proxy.yaml"}
+             ]
+           },
+           { "#WORK_KUBEPROX#": 
+             [
+               {"manifests/kube-proxy-work.yaml": "/etc/kubernetes/manifests/kube-proxy.yaml"}
              ]
            },
            { "#KUBESCHL#": 
@@ -36,14 +41,16 @@
              [
                {"ssl/etcd-node.pem": "/var/lib/etcd/ssl/etcd-node.pem"},
                {"ssl/etcd-node.pem": "/etc/docker/server.pem"},
-               {"ssl/etcd-node.pem": "/etc/kubernetes/ssl/etcd-node.pem"}
+               {"ssl/etcd-node.pem": "/etc/kubernetes/ssl/etcd-node.pem"},
+               {"ssl/etcd-node.pem": "/etc/kubernetes/ssl/worker.pem"}
              ]
            },
            { "#ETCD_KEY#": 
              [
                {"ssl/etcd-node-key.pem": "/var/lib/etcd/ssl/etcd-node-key.pem"},
                {"ssl/etcd-node-key.pem": "/etc/docker/server-key.pem"},
-               {"ssl/etcd-node-key.pem": "/etc/kubernetes/ssl/etcd-node-key.pem"}
+               {"ssl/etcd-node-key.pem": "/etc/kubernetes/ssl/etcd-node-key.pem"},
+               {"ssl/etcd-node-key.pem": "/etc/kubernetes/ssl/worker-key.pem"}
              ]
            }
   ],
@@ -91,10 +98,10 @@
               [{"https_proxy":  "#HTTPS_PROXY1@"}]
             },
             { "#HTTP_PROXY2#":  
-              [{"http_proxy":  "#HTTP_PROXY2@"}]
+              [{"HTTP_PROXY":  "#HTTP_PROXY2@"}]
             },
             { "#HTTPS_PROXY2#":  
-              [{"https_proxy":  "#HTTPS_PROXY2@"}]
+              [{"HTTPS_PROXY":  "#HTTPS_PROXY2@"}]
             },
             { "#DOMAIN#":  
               [{"domain":  "#DOMAIN@"}]
@@ -159,11 +166,26 @@
             { "#ETCDCTL_KEY_FILE2#":  
               [{"etcdctl_key_file":  "/etc/kubernetes/ssl/etcd-node-key.pem"}]
             },
+            { "#WORK_CERT_FILE#":  
+              [{"work_cert_file":  "/etc/kubernetes/ssl/worker.pem"}]
+            },
+            { "#WORK_KEY_FILE#":  
+              [{"work_key_file":  "/etc/kubernetes/ssl/worker-key.pem"}]
+            },
             { "#INITIAL_CLUSTER_STATE#":  
               [{"initial_cluster_state":  "new"}]
             },
             { "#SSL_DIR#":  
               [{"ssl_dir":  "/var/lib/etcd/ssl"}]
+            },
+            { "#KUB_SSL_DIR#":  
+              [{"kub_ssl_dir":  "/etc/kubernetes/ssl"}]
+            },
+            { "#KUBECONFIG#":  
+              [{"kubeconfig":  "/etc/kubernetes/ssl/kubeconfig.yaml"}]
+            },
+            { "#WORK_KUBECONFIG#":  
+              [{"work_kubeconfig":  "/etc/kubernetes/ssl/worker-kubeconfig.yaml"}]
             },
             { "#KUBELET_VERSION#":  
               [{"kubelet_version":  "#KUBELET_VERSION@"}]
