@@ -168,7 +168,7 @@ The script generates the below list of files and Directories.
 You can use the ign (or ISO with ign file) in a verity of ways.
 If you are using bear-metal or virtual box, an example is explained below.
 
-First, configure VirtualBox Networking. for more details you can follow this <a href="docs/VirtualBox/README">document</a>.
+First, configure VirtualBox Networking. for more details you can follow this <a href="docs/VirtualBox/README.md">document</a>.
 
 Boot from a CoreOS ISO/CD/USB which already contains the <i>coreos-install</i> script or use any bootable CD, then download the CoreOS <i>coreos-install</i> script from <a href="https://raw.github.com/coreos/init/master/bin/coreos-install" rel="nofollow">here</a>.
 
