@@ -70,10 +70,10 @@ storage:
           LOCKSMITHCTL_ETCD_CERTFILE=#ETCDCTL_CERT_FILE1#
           LOCKSMITHCTL_ETCD_KEYFILE=#ETCDCTL_KEY_FILE1#
           LOCKSMITHCTL_ENDPOINT="https://#THIS_NODE_IP#:2379"
-          HTTP_PROXY=#HTTP_PROXY2#
-          HTTPS_PROXY=#HTTPS_PROXY2#
-          http_proxy=#HTTP_PROXY1#
-          https_proxy=#HTTPS_PROXY1#
+          #HTTP_PROXY2#
+          #HTTPS_PROXY2#
+          ##HTTP_PROXY1#
+          ##HTTPS_PROXY1#
           no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
     - path: /etc/systemd/system.conf.d/10-default-env.conf
       filesystem: root
@@ -81,11 +81,11 @@ storage:
       contents:
         inline: |
           [Manager]
-          DefaultEnvironment=http_proxy=#HTTP_PROXY1#
-          DefaultEnvironment=https_proxy=#HTTPS_PROXY1#
-          DefaultEnvironment=HTTP_PROXY=#HTTP_PROXY2#
-          DefaultEnvironment=HTTPS_PROXY=#HTTPS_PROXY2#
-          DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
+          #DefaultEnvironment=##HTTP_PROXY1#
+          #DefaultEnvironment=##HTTPS_PROXY1#
+          #DefaultEnvironment=#HTTP_PROXY2#
+          #DefaultEnvironment=#HTTPS_PROXY2#
+          #DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
     - path: /etc/systemd/system/docker.service.d/environment.conf
       filesystem: root
       mode: 0644
@@ -142,6 +142,18 @@ storage:
       contents:
         inline: |
 #ETCD_KEY#
+    - path: #WORK_CERT_FILE#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_NODE##CA_CERT#
+    - path: #WORK_KEY_FILE#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#ETCD_KEY#
     - path: /etc/profile.d/aliases.sh
       filesystem: root
       mode: 0755
@@ -165,6 +177,11 @@ storage:
           FLANNELD_IFACE="#FLANNELD_IFACE#"
           FLANNELD_ETCD_ENDPOINTS=${ETCDCTL_ENDPOINTS}
           FLANNELD_ETCD_PREFIX="#FLANNELD_ETCD_PREFIX#"
+          #HTTP_PROXY2#
+          #HTTPS_PROXY2#
+          ##HTTP_PROXY1#
+          ##HTTPS_PROXY1#
+          no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
     - path: /etc/systemd/system/docker.service.d/40-flannel.conf
       filesystem: root
       mode: 0644
@@ -211,7 +228,7 @@ storage:
         inline: |
           KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
           KUBELET_VERSION=#KUBELET_VERSION#
-    - path: /etc/kubernetes/kubeconfig.yaml 
+    - path: /etc/kubernetes/ssl/kubeconfig.yaml 
       filesystem: root
       mode: 0644
       contents:
@@ -221,7 +238,7 @@ storage:
           clusters:
           - name: local
             cluster:
-              server: https://#THIS_NODE_IP#:443
+              server: https://#NODE1_IP#:443
               certificate-authority: #CA_FILE3#
           users:
           - name: kubelet
@@ -249,7 +266,7 @@ storage:
       mode: 0644
       contents:
         inline: |
-#KUBEPROX#
+#MASTER_KUBEPROX#
     - path: /etc/kubernetes/manifests/kube-scheduler.yaml
       filesystem: root
       mode: 0644
@@ -299,11 +316,11 @@ systemd:
           contents: |
             [Service]
             Environment=DOCKER_OPTS='#DOCKER_OPTS#'
-            Environment=HTTP_PROXY=#HTTP_PROXY2#
-            Environment=HTTPS_PROXY=#HTTPS_PROXY2#
-            Environment=http_proxy=#HTTP_PROXY1#
-            Environment=https_proxy=#HTTPS_PROXY1#
-            Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+            #Environment=#HTTP_PROXY2#
+            #Environment=#HTTPS_PROXY2#
+            #Environment=##HTTP_PROXY1#
+            #Environment=##HTTPS_PROXY1#
+            #Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
 
     - name: etcd-member.service
       enable: true
@@ -444,11 +461,11 @@ systemd:
         [Service]
         Slice=system.slice
         Environment=KUBELET_IMAGE_TAG=#KUBELET_VERSION#
-        #Environment=HTTP_PROXY=#HTTP_PROXY2#
-        #Environment=HTTPS_PROXY=#HTTPS_PROXY2#
-        #Environment=http_proxy=#HTTP_PROXY1#
-        #Environment=https_proxy=#HTTPS_PROXY1#
-        #Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
+        Environment=#HTTP_PROXY2#
+        Environment=#HTTPS_PROXY2#
+        #Environment=##HTTP_PROXY1#
+        #Environment=##HTTPS_PROXY1#
+        Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
         ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/usr/bin/mkdir -p /var/log/containers
         ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d
@@ -518,7 +535,7 @@ networkd:
         Name=#FLANNELD_IFACE#
 
         [Network]
-        Address=#THIS_NODE_IP#/24
+        Address=#THIS_NODE_IP#/20
         Gateway=#NODE_GW#
         DNS=#DNS1#
         DNS=#DNS2#

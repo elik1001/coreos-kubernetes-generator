@@ -11,12 +11,18 @@ spec:
         command:
         - ./hyperkube
         - controller-manager
-        - --master=http://127.0.0.1:8080
+        - --master=#THIS_NODE_IP#
+        - --kubeconfig=#KUBECONFIG#
         - --leader-elect=true
         - --allocate-node-cidrs=true
         - --cluster-cidr=#CIDR_NETWORK#
-        - --service-account-private-key-file=#ETCDCTL_KEY_FILE1#
-        - --root-ca-file=#CA_FILE2#
+        - --service-cluster-ip-range=10.3.0.0/21
+        - --service-account-private-key-file=#ETCDCTL_KEY_FILE2#
+        - --root-ca-file=#CA_FILE1#
+        - --cluster-signing-key-file=#CA_KEY#
+        - --service-account-private-key-file=#ETCDCTL_KEY_FILE2#
+        - --root-ca-file=#CA_FILE1#
+        - --cluster-signing-cert-file=#CA_FILE1#
         livenessProbe:
           httpGet:
             host: 127.0.0.1
@@ -25,22 +31,22 @@ spec:
           initialDelaySeconds: 15
           timeoutSeconds: 5
         volumeMounts:
-        - mountPath: #SSL_DIR#
-          name: secrets
-          readOnly: true
         - mountPath: /etc/ssl/certs
           name: ssl-host
           readOnly: true
         - mountPath: /var/log/kube-controller-manager.log
           name: logfile
           readOnly: false
+        - mountPath: #KUB_SSL_DIR#"
+          name: "kube-ssl"
+          readOnly: true
       volumes:
-      - hostPath:
-          path: #SSL_DIR#
-        name: secrets
       - hostPath:
           path: /usr/share/ca-certificates
         name: ssl-host
       - hostPath:
           path: /var/log/kube-controller-manager.log
         name: logfile
+      - hostPath:
+          path: "#KUB_SSL_DIR#"
+        name: "kube-ssl"
