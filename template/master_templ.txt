@@ -293,7 +293,7 @@ systemd:
         - name: conf1.conf
           contents: |
             [Service]
-            EnvironmentFile=/etc/environment
+            EnvironmentFile=/etc/flannel/options.env
 
     - name: docker-tcp.socket
       enabled: false
@@ -450,7 +450,7 @@ systemd:
         WantedBy=sockets.target
 
     - name: kubelet.service
-      enabled: false
+      enabled: true
       contents: |
         [Unit]
         Description=The primary agent to run pods
