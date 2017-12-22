@@ -266,7 +266,7 @@ def inplace_change(repl_type, repl_keyname, sfilepath, filecount, filetomodify):
     f.close()
 
     if 'PROXY1@' in filecount or 'PROXY2@' in filecount:
-      newdata = todata.replace(repl_keyname, sfilepath + "=")
+      newdata = todata.replace(repl_keyname, "#" + sfilepath + "=")
     else:
       newdata = todata.replace(repl_keyname, x)
     f = open(filetomodify, 'w')
