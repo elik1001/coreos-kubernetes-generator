@@ -23,6 +23,8 @@
 
 <p>Now you <i>NAT Network</i> is all set.</p>
 
+<b>Note: </b>When setting up a new VM, make sure to set 1500/Mb+ Memory(the default is only 1024/Mb), to prevent the Boot stuck at "Starting Switch Root".
+<br>
 <p>Next lets move to the VM configuration.
 <br>Click on your VM > Settings > Network.
 <br>Under <i>Attach to:</i> Select <i>NAT Network</i>
