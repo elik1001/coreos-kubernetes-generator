@@ -29,25 +29,25 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          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
+          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
-          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIx
-          MjAzNDIzWhcNMjcxMjE5MjAzNDIzWjBdMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
+          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
-          CgKCAQEAz9qmdRLN1HrYcdZJRhIFkz2i2ljjxRZ4XPPIMSlMBCR5CPkIt4pMLtMl
-          IiAYKWDtoL4PyJTMiWrVFhO96IB0Esbyr3m238OnJZ/gmQTYj2DmaYxGrl2ktZd0
-          ZFzi6e3/O7JVcHJ2dYvt3KV9J7VfIlpfjnBjgTMCPV3KoAOGLfCl+tlxxwGDa08n
-          dNhwDBridj0rjMOylZv8qAuQcP1+ETDCHz+OmWlFqH5Cff1iQjUh16puKBpxJlmG
-          K+266HsJlIMg6WQf0Aq5kUvflV5yxp5FYexiyosRJ/TAaz5aCGC11y+j9wC93UO4
-          EItjBGgTYsBbn+QN9LcAhfJE4U2TUQIDAQABo0IwQDAOBgNVHQ8BAf8EBAMCAQYw
-          DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUDtBWtHOCg76WV27wW/hrfW8khkAw
-          DQYJKoZIhvcNAQELBQADggEBAHoQh3HpDHmWjqRCSCHQum1+hn7vLwf/LFA/SOxc
-          Ljd4i9gN4yA7OnwZ9MSzrTFQ/dYG5GrVfd0XeVHmdL3ZCh/KgVGAM5k0p9VuFNs4
-          qWQdakrh5g38a6HPwztPys4xYSOcK6+wnIup5wpr30/aIYy+uuGJ5ZZRGBASBUsO
-          sN7omj1WK2CfX67tWPCU9U17/MRgXHzjYAPhSoZWWy/78YGRfS120Im/aIY6B20q
-          9UwCvcv/XmzA2EGrJWjRhYQRVmdftIHyUeR8roIHBG+TI7ZYlIzB7zY1hLfTBS6g
-          32V9+xNLSs0bX33+2+N5UEW/klUwk9gqoLqsGtNw5th26YQ=
+          CgKCAQEAtOO+RhYZyOplfA/G5VaiKMUa/YRmeboLtjJZr20uwfTFc7+GzFpvf8RF
+          /L+AR3XlNKauRoCGYCwVg0bLY+IizobqBgecFkNsl5sRbGVPrNceIYEIiGUSOT8K
+          Xr67b2QsDqgFHEJXngpKuYrhbyyb3SHAm+Ux9DmecuQ4tOxAW5sXpINhBoLpZKtU
+          +vr3ItCmfjOKERos8+GKMzD2ruPUW3dQzG/P3P35+DWDalBrP7XUCAgRMDeLAaCP
+          j3dEDyU4jr6UyohyMkzC6JTICkywtTH6zcbHv5H25H4H8atRVtOf3abUHF6HPpIU
+          HtUjhBagpOdGGvVrHVkWM+RZiooHmwIDAQABo0IwQDAOBgNVHQ8BAf8EBAMCAQYw
+          DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUsr5AcLRr6pxxwVC5gfW7NJQx3Xcw
+          DQYJKoZIhvcNAQELBQADggEBACx3/ZRqAUlBU/TavQms4ao3CtLtvKcJWQ+nUm8Z
+          tjBW1rkOxdmI00+peRpP8Z3hvHVa9sP4s8OSrqRHupzaAaQay0xnIAnPjAtO4N42
+          wBzz71jAhyzyLm4QxdbgvPH+qJxM8i7e8MXtNYffzLOcjuYf0JfjWJXOWWs9Dbgi
+          RQwjQh94IFrjF22b37Wrn4arChNwQgBBobWOp30R1Mfdbgp4sxJSbewAVNKzmsUh
+          +3UTcworDMe4rOn1rd6OitsDSFYs7DO+1GeRM6SNzJ4Lf+Vv+XXvHkQ35z1JNDlC
+          p0HMVYpgDzLWU+aEVOG0azwZXex4A4bdTSbldvCtT9kHcSA=
           -----END CERTIFICATE-----
 
     - path: /etc/docker/server.pem
@@ -56,20 +56,20 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          MIIFiTCCBHGgAwIBAgIJAPTL44w/+41KMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
+          MIIFiTCCBHGgAwIBAgIJAJUXSmYDMxBlMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
           BAYTAlVTMQswCQYDVQQIDAJOWTERMA8GA1UEBwwITmV3IFlvcmsxETAPBgNVBAoM
-          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIx
-          MjAzNDI0WhcNMjcxMjE5MjAzNDI0WjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
+          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIy
+          MTcxNDEwWhcNMjcxMjIwMTcxNDEwWjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
           TlkxETAPBgNVBAcMCE5ldyBZb3JrMREwDwYDVQQKDAhDb21wYW55MTEMMAoGA1UE
           CwwDT3BzMRIwEAYDVQQDDAlldGNkLW5vZGUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-          DwAwggEKAoIBAQDTTtCGJFpw5mYZYrwP2fWSK2C7f0wpXR5QzqcZToz/ZmSvWNY0
-          N6ja+HtodrpwG4dN/9KlBzNNlcXl1f8jrGcnwheBhNj9rAWR/431jrJAhzbOOCgC
-          zDWDbKw/ySt2GTKJpuwocCOHx5NzY4+ISWkVksGIv27x9Le7axpSKJ5in7JSpIAc
-          UYhxrHJr3+VyBY/vJF40fmeDdw/TqiixuJ9YIuHQBnmM4OxzRHPAD1DB/o23hYfz
-          EYVFaBXOgu0qCMS59U13eGfWECekynn81HLml8/bpoZylxsWvYjhS7UdPmJ4ih+c
-          iNp1rL8TE7kof/bZWuMui+Dy2Ikc5Wgxf6ABAgMBAAGjggJFMIICQTAOBgNVHQ8B
+          DwAwggEKAoIBAQCwOCkXAUGK/L2pC3smRnW62su9O9M+CApNXSI3Z42KMByaUTso
+          H5MbjRCr6rMxKVYZhRifjozphV2dBtka78GK9gMAkHOJflIcdYFPIbyApfdlj6Y+
+          vyiLzQFNxiWxFSZ8Z2bUaCG4u0MlEjag7ncWz1wzBlKcvNcNIk2ny7HuqDjKd88c
+          6spW6iKZQZ31GZzSj5KKvp2gphdOPdlA2hEmkGX+z4dRV26BXyp4k/3u5GbuE3KT
+          BmFBaadHiLnxPHcIxE8FX1z6Fvf8WFgarm5xu/mCmyR5k6N/7slrtj09ndEJPWlD
+          lG6VpgvLKmxEfp7II9S0IClENbTAqnr6qAZXAgMBAAGjggJFMIICQTAOBgNVHQ8B
           Af8EBAMCBeAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB
-          /wQCMAAwHQYDVR0OBBYEFLLBn8nnxrYJ1p+0tU5NL1i9XMtgMIIB4QYDVR0RBIIB
+          /wQCMAAwHQYDVR0OBBYEFKWb075VcQvlLjR+38pTVOHNRfi2MIIB4QYDVR0RBIIB
           2DCCAdSCCmt1YmVybmV0ZXOCEmt1YmVybmV0ZXMuZGVmYXVsdIIWa3ViZXJuZXRl
           cy5kZWZhdWx0LnN2Y4Ika3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxv
           Y2Fsgg5rdWJlLWFwaXNlcnZlcoIKa3ViZS1hZG1pboIJbG9jYWxob3N0ggtibmgu
@@ -80,12 +80,12 @@ storage:
           d29ya2VyMi5leGFtcGxlLmNvbYITd29ya2VyMy5leGFtcGxlLmNvbYcEfwAAAYcE
           AAAAAIcECgMAAYcECgMACocECgMAMocErBQAAYcErBQAAocErBQAC4cErBQADIcE
           rBQADYcErBQAM4cErBQANIcErBQANYERYWRtaW5AZXhhbXBsZS5jb20wDQYJKoZI
-          hvcNAQELBQADggEBAAKsz4RII39IVZGAAo9EO5AqQHIF6pw7r41TiKjUgF1JxhKJ
-          +DRe9lcMKPh9LcOKhZrH7zKLECZaUO1Nq0GzZ6SzRwo9+K7hGB1l1R21tncTdRiK
-          baEPH9lhJWZGHM98WPxMXhHTGo3lf/PClAS2oFpTi1dn8F1BGHWCtUaAnPE6E1GN
-          FowL0RTcyseLHVwMsxNmV6wuYmERySUng3YBPzJdjqKETz7L5YhlsroQTO85/1rW
-          ogryayn7tjaayZ3bLys5D7O29/AVEJZxw2+598c1gSE2dLr+LJYo2utWsKDoAmpF
-          ysHBDP9hwWlwG2F/NFY4/sh9Q4/ZPOWz0UyklqE=
+          hvcNAQELBQADggEBAEHDhUganq2e3zEjSmxGSjNv9QbUgBk05QIxOt8YJtBmEwx0
+          eSQxE9E8cglWQNr4kL86Z7JpBcZqYc31N0NYiWLimsHrX5udFfCFUZ+c42xtXil6
+          cg/J0epk20q2NLkSsmUl/DT4P6JJl4zrUi7Rf2fQdyUx+SuHcXF0eRKTGG9y6Rx6
+          /myWDGpn3peCq8DfO4b+QyOhchH+HWbrcA7XlxZHWbU4CWDLV8eCNAay9zvhK0SM
+          u2PYROxnd2qkFraMXu1tYWxG84BWsbgycpOnGztpJR8JS3UF2c65fWF7InA6nXKT
+          1x3f+5z5VNAKUZhorIeuH1E0Sb/C6izjLOgCBIs=
           -----END CERTIFICATE-----
 
     - path: /etc/docker/server-key.pem
@@ -94,31 +94,31 @@ storage:
       contents:
         inline: |
           -----BEGIN RSA PRIVATE KEY-----
-          MIIEpQIBAAKCAQEA007QhiRacOZmGWK8D9n1kitgu39MKV0eUM6nGU6M/2Zkr1jW
-          NDeo2vh7aHa6cBuHTf/SpQczTZXF5dX/I6xnJ8IXgYTY/awFkf+N9Y6yQIc2zjgo
-          Asw1g2ysP8krdhkyiabsKHAjh8eTc2OPiElpFZLBiL9u8fS3u2saUiieYp+yUqSA
-          HFGIcaxya9/lcgWP7yReNH5ng3cP06oosbifWCLh0AZ5jODsc0RzwA9Qwf6Nt4WH
-          8xGFRWgVzoLtKgjEufVNd3hn1hAnpMp5/NRy5pfP26aGcpcbFr2I4Uu1HT5ieIof
-          nIjaday/ExO5KH/22VrjLovg8tiJHOVoMX+gAQIDAQABAoIBAF9G1EMHtTfeyv57
-          RGypTE7h/DXOihrEf9zTsQh6IJ0wIAnoNn1I83v4Ojy5/Ap8fx+uT95VRs6ez6J4
-          QRhmrgSBQXQG4IhQvho8blfgRYNO9Gk7bN8GEML3hxsjq9MOPXlPqH/7QCoC1Ptc
-          UuWSpC00BMuR9YZnX0jEXBPbeL7ijEFMFI4AnJdVBP1jd9806nDlxZkSih8HmIBS
-          wGY7/hbQX4tuZ6NmGf2LoHRqM5a7WVyostUYmSzaSZg/JmvZexYvywXa16DgcDGY
-          ynWIbs5JbSLBEbOlYeyBfIFiHf+26fC0CxMuNBk/8g64hCFuqrYcfG9my+VHkO0/
-          fdmSzTkCgYEA/mYyl1D9/AmipP9taFk6ppEXvqOS+XTkFGK1anq3rZaeeuZBK376
-          fR6Clb8bvi3JdzmN8WhslABt74riVw1dirmhZMorpASJYfTKTADHR8nsjkCxI3XI
-          PYu90AQYvPtUjf7nrk61NDOkCjG/knAnQQW8G6THQbJmR7ta6vlOaMcCgYEA1KMz
-          4awcceFCINj1o8xtePRJPqJMCFGusQHLlg+HxuINb0iZdZzP2KmOi8EQDrLH19Jh
-          s0nC4WK/s/2n+qHOmWvrCb008gN2BoXwywwNr23BWkbahsubyliZ3ikeZAJWJC4/
-          Lj1WjtHg9yYGCSTj+t3DYsAgzjTBay7W/mWrOPcCgYEAwpfFxv0K6kksge1n8NOg
-          C10cvpQ8jlgdRoKipkosSbnWi8eove6pCB/YX1cJj5VSb8I0kx3/P858SSkBLPlq
-          Pfz0OTZz30ghFi66txw5Uu5f5ggR9z/W5U0I6h7YFWZiLSN4cFqAPOfraGjZUtg7
-          Dn+mfbazO8uMdP4Y83ezxG0CgYEAi5fYp35l7h0DXK0SFcZO1+kHbKb/Yza8iFe1
-          X34ylM4yI6x1klCv4nztp7HG6N9Vcsoaeaki1vQNBgywCknPZ8kBNBOSfo7nHMEx
-          oxr2oQRcuvdo3rUsQVqJKN+1o9Ik2vvBXonGGVyPY7ECpV4ijL6pVlrrLnRTxhmp
-          6riz/2ECgYEAqHiGNSCa6ZwZk/EbOyYq+vOFeoxbHZUF2TIxFHbqCenMLQGu3LgJ
-          8FIIMhFFCNx1OX/j4/lLh8ux6YPRfZcLsack8u0yK8x5Q8o9UI+vKXpYeregpN/9
-          BM6D5KBfTNdF3X6jQyBfFylnsei4eMbfV+ovbm0FI2yH24EBzDduk3E=
+          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
           -----END RSA PRIVATE KEY-----
 
     - path: "/etc/motd"
@@ -150,10 +150,10 @@ storage:
           LOCKSMITHCTL_ETCD_CERTFILE=/var/lib/etcd/ssl/etcd-node.pem
           LOCKSMITHCTL_ETCD_KEYFILE=/var/lib/etcd/ssl/etcd-node-key.pem
           LOCKSMITHCTL_ENDPOINT="https://172.20.0.51:2379"
-          HTTP_PROXY=HTTP_PROXY=
-          HTTPS_PROXY=HTTPS_PROXY=
-          #http_proxy=http_proxy=
-          #https_proxy=https_proxy=
+          HTTP_PROXY=#HTTP_PROXY=
+          HTTPS_PROXY=#HTTPS_PROXY=
+          #http_proxy=#http_proxy=
+          #https_proxy=#https_proxy=
           #no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,172.20.0.11,172.20.0.12,172.20.0.13,coreos1,coreos2,coreos3,coreos1.example.com,coreos2.example.com,coreos3.example.com,/var/run/docker.sock
     - path: /etc/systemd/system.conf.d/10-default-env.conf
       filesystem: root
@@ -161,10 +161,10 @@ storage:
       contents:
         inline: |
           [Manager]
-          #DefaultEnvironment=http_proxy=http_proxy=
-          #DefaultEnvironment=https_proxy=https_proxy=
-          #DefaultEnvironment=HTTP_PROXY=HTTP_PROXY=
-          #DefaultEnvironment=HTTPS_PROXY=HTTPS_PROXY=
+          #DefaultEnvironment=http_proxy=#http_proxy=
+          #DefaultEnvironment=https_proxy=#https_proxy=
+          #DefaultEnvironment=HTTP_PROXY=#HTTP_PROXY=
+          #DefaultEnvironment=HTTPS_PROXY=#HTTPS_PROXY=
           #DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,172.20.0.11,172.20.0.12,172.20.0.13,coreos1,coreos2,coreos3,coreos1.example.com,coreos2.example.com,coreos3.example.com,/var/run/docker.sock"
     - path: /etc/systemd/system/docker.service.d/environment.conf
       filesystem: root
@@ -194,25 +194,25 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          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
+          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
-          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIx
-          MjAzNDIzWhcNMjcxMjE5MjAzNDIzWjBdMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
+          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIy
+          MTcxNDEwWhcNMjcxMjIwMTcxNDEwWjBdMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
           TlkxETAPBgNVBAcMCE5ldyBZb3JrMREwDwYDVQQKDAhDb21wYW55MTEMMAoGA1UE
           CwwDT3BzMQ0wCwYDVQQDDARFdGNkMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB
-          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
+          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
           -----END CERTIFICATE-----
 
     - path: /etc/ssl/certs/ca.pem
@@ -221,25 +221,25 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          MIIDfzCCAmegAwIBAgIJANV1kV+MPUqPMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
+          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
-          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
+          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
-          CgKCAQEAz9qmdRLN1HrYcdZJRhIFkz2i2ljjxRZ4XPPIMSlMBCR5CPkIt4pMLtMl
-          IiAYKWDtoL4PyJTMiWrVFhO96IB0Esbyr3m238OnJZ/gmQTYj2DmaYxGrl2ktZd0
-          ZFzi6e3/O7JVcHJ2dYvt3KV9J7VfIlpfjnBjgTMCPV3KoAOGLfCl+tlxxwGDa08n
-          dNhwDBridj0rjMOylZv8qAuQcP1+ETDCHz+OmWlFqH5Cff1iQjUh16puKBpxJlmG
-          K+266HsJlIMg6WQf0Aq5kUvflV5yxp5FYexiyosRJ/TAaz5aCGC11y+j9wC93UO4
-          EItjBGgTYsBbn+QN9LcAhfJE4U2TUQIDAQABo0IwQDAOBgNVHQ8BAf8EBAMCAQYw
-          DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUDtBWtHOCg76WV27wW/hrfW8khkAw
-          DQYJKoZIhvcNAQELBQADggEBAHoQh3HpDHmWjqRCSCHQum1+hn7vLwf/LFA/SOxc
-          Ljd4i9gN4yA7OnwZ9MSzrTFQ/dYG5GrVfd0XeVHmdL3ZCh/KgVGAM5k0p9VuFNs4
-          qWQdakrh5g38a6HPwztPys4xYSOcK6+wnIup5wpr30/aIYy+uuGJ5ZZRGBASBUsO
-          sN7omj1WK2CfX67tWPCU9U17/MRgXHzjYAPhSoZWWy/78YGRfS120Im/aIY6B20q
-          9UwCvcv/XmzA2EGrJWjRhYQRVmdftIHyUeR8roIHBG+TI7ZYlIzB7zY1hLfTBS6g
-          32V9+xNLSs0bX33+2+N5UEW/klUwk9gqoLqsGtNw5th26YQ=
+          CgKCAQEAtOO+RhYZyOplfA/G5VaiKMUa/YRmeboLtjJZr20uwfTFc7+GzFpvf8RF
+          /L+AR3XlNKauRoCGYCwVg0bLY+IizobqBgecFkNsl5sRbGVPrNceIYEIiGUSOT8K
+          Xr67b2QsDqgFHEJXngpKuYrhbyyb3SHAm+Ux9DmecuQ4tOxAW5sXpINhBoLpZKtU
+          +vr3ItCmfjOKERos8+GKMzD2ruPUW3dQzG/P3P35+DWDalBrP7XUCAgRMDeLAaCP
+          j3dEDyU4jr6UyohyMkzC6JTICkywtTH6zcbHv5H25H4H8atRVtOf3abUHF6HPpIU
+          HtUjhBagpOdGGvVrHVkWM+RZiooHmwIDAQABo0IwQDAOBgNVHQ8BAf8EBAMCAQYw
+          DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUsr5AcLRr6pxxwVC5gfW7NJQx3Xcw
+          DQYJKoZIhvcNAQELBQADggEBACx3/ZRqAUlBU/TavQms4ao3CtLtvKcJWQ+nUm8Z
+          tjBW1rkOxdmI00+peRpP8Z3hvHVa9sP4s8OSrqRHupzaAaQay0xnIAnPjAtO4N42
+          wBzz71jAhyzyLm4QxdbgvPH+qJxM8i7e8MXtNYffzLOcjuYf0JfjWJXOWWs9Dbgi
+          RQwjQh94IFrjF22b37Wrn4arChNwQgBBobWOp30R1Mfdbgp4sxJSbewAVNKzmsUh
+          +3UTcworDMe4rOn1rd6OitsDSFYs7DO+1GeRM6SNzJ4Lf+Vv+XXvHkQ35z1JNDlC
+          p0HMVYpgDzLWU+aEVOG0azwZXex4A4bdTSbldvCtT9kHcSA=
           -----END CERTIFICATE-----
 
     - path: /etc/kubernetes/ssl/ca.pem
@@ -248,25 +248,25 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          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
+          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
-          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
+          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
-          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
+          CgKCAQEAtOO+RhYZyOplfA/G5VaiKMUa/YRmeboLtjJZr20uwfTFc7+GzFpvf8RF
+          /L+AR3XlNKauRoCGYCwVg0bLY+IizobqBgecFkNsl5sRbGVPrNceIYEIiGUSOT8K
+          Xr67b2QsDqgFHEJXngpKuYrhbyyb3SHAm+Ux9DmecuQ4tOxAW5sXpINhBoLpZKtU
+          +vr3ItCmfjOKERos8+GKMzD2ruPUW3dQzG/P3P35+DWDalBrP7XUCAgRMDeLAaCP
+          j3dEDyU4jr6UyohyMkzC6JTICkywtTH6zcbHv5H25H4H8atRVtOf3abUHF6HPpIU
+          HtUjhBagpOdGGvVrHVkWM+RZiooHmwIDAQABo0IwQDAOBgNVHQ8BAf8EBAMCAQYw
+          DwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUsr5AcLRr6pxxwVC5gfW7NJQx3Xcw
+          DQYJKoZIhvcNAQELBQADggEBACx3/ZRqAUlBU/TavQms4ao3CtLtvKcJWQ+nUm8Z
+          tjBW1rkOxdmI00+peRpP8Z3hvHVa9sP4s8OSrqRHupzaAaQay0xnIAnPjAtO4N42
+          wBzz71jAhyzyLm4QxdbgvPH+qJxM8i7e8MXtNYffzLOcjuYf0JfjWJXOWWs9Dbgi
+          RQwjQh94IFrjF22b37Wrn4arChNwQgBBobWOp30R1Mfdbgp4sxJSbewAVNKzmsUh
+          +3UTcworDMe4rOn1rd6OitsDSFYs7DO+1GeRM6SNzJ4Lf+Vv+XXvHkQ35z1JNDlC
+          p0HMVYpgDzLWU+aEVOG0azwZXex4A4bdTSbldvCtT9kHcSA=
           -----END CERTIFICATE-----
 
     - path: /etc/kubernetes/ssl/etcd-node.pem
@@ -275,20 +275,20 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          MIIFiTCCBHGgAwIBAgIJAPTL44w/+41KMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
+          MIIFiTCCBHGgAwIBAgIJAJUXSmYDMxBlMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
           BAYTAlVTMQswCQYDVQQIDAJOWTERMA8GA1UEBwwITmV3IFlvcmsxETAPBgNVBAoM
-          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIx
-          MjAzNDI0WhcNMjcxMjE5MjAzNDI0WjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
+          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIy
+          MTcxNDEwWhcNMjcxMjIwMTcxNDEwWjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
           TlkxETAPBgNVBAcMCE5ldyBZb3JrMREwDwYDVQQKDAhDb21wYW55MTEMMAoGA1UE
           CwwDT3BzMRIwEAYDVQQDDAlldGNkLW5vZGUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-          DwAwggEKAoIBAQDTTtCGJFpw5mYZYrwP2fWSK2C7f0wpXR5QzqcZToz/ZmSvWNY0
-          N6ja+HtodrpwG4dN/9KlBzNNlcXl1f8jrGcnwheBhNj9rAWR/431jrJAhzbOOCgC
-          zDWDbKw/ySt2GTKJpuwocCOHx5NzY4+ISWkVksGIv27x9Le7axpSKJ5in7JSpIAc
-          UYhxrHJr3+VyBY/vJF40fmeDdw/TqiixuJ9YIuHQBnmM4OxzRHPAD1DB/o23hYfz
-          EYVFaBXOgu0qCMS59U13eGfWECekynn81HLml8/bpoZylxsWvYjhS7UdPmJ4ih+c
-          iNp1rL8TE7kof/bZWuMui+Dy2Ikc5Wgxf6ABAgMBAAGjggJFMIICQTAOBgNVHQ8B
+          DwAwggEKAoIBAQCwOCkXAUGK/L2pC3smRnW62su9O9M+CApNXSI3Z42KMByaUTso
+          H5MbjRCr6rMxKVYZhRifjozphV2dBtka78GK9gMAkHOJflIcdYFPIbyApfdlj6Y+
+          vyiLzQFNxiWxFSZ8Z2bUaCG4u0MlEjag7ncWz1wzBlKcvNcNIk2ny7HuqDjKd88c
+          6spW6iKZQZ31GZzSj5KKvp2gphdOPdlA2hEmkGX+z4dRV26BXyp4k/3u5GbuE3KT
+          BmFBaadHiLnxPHcIxE8FX1z6Fvf8WFgarm5xu/mCmyR5k6N/7slrtj09ndEJPWlD
+          lG6VpgvLKmxEfp7II9S0IClENbTAqnr6qAZXAgMBAAGjggJFMIICQTAOBgNVHQ8B
           Af8EBAMCBeAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB
-          /wQCMAAwHQYDVR0OBBYEFLLBn8nnxrYJ1p+0tU5NL1i9XMtgMIIB4QYDVR0RBIIB
+          /wQCMAAwHQYDVR0OBBYEFKWb075VcQvlLjR+38pTVOHNRfi2MIIB4QYDVR0RBIIB
           2DCCAdSCCmt1YmVybmV0ZXOCEmt1YmVybmV0ZXMuZGVmYXVsdIIWa3ViZXJuZXRl
           cy5kZWZhdWx0LnN2Y4Ika3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxv
           Y2Fsgg5rdWJlLWFwaXNlcnZlcoIKa3ViZS1hZG1pboIJbG9jYWxob3N0ggtibmgu
@@ -299,12 +299,12 @@ storage:
           d29ya2VyMi5leGFtcGxlLmNvbYITd29ya2VyMy5leGFtcGxlLmNvbYcEfwAAAYcE
           AAAAAIcECgMAAYcECgMACocECgMAMocErBQAAYcErBQAAocErBQAC4cErBQADIcE
           rBQADYcErBQAM4cErBQANIcErBQANYERYWRtaW5AZXhhbXBsZS5jb20wDQYJKoZI
-          hvcNAQELBQADggEBAAKsz4RII39IVZGAAo9EO5AqQHIF6pw7r41TiKjUgF1JxhKJ
-          +DRe9lcMKPh9LcOKhZrH7zKLECZaUO1Nq0GzZ6SzRwo9+K7hGB1l1R21tncTdRiK
-          baEPH9lhJWZGHM98WPxMXhHTGo3lf/PClAS2oFpTi1dn8F1BGHWCtUaAnPE6E1GN
-          FowL0RTcyseLHVwMsxNmV6wuYmERySUng3YBPzJdjqKETz7L5YhlsroQTO85/1rW
-          ogryayn7tjaayZ3bLys5D7O29/AVEJZxw2+598c1gSE2dLr+LJYo2utWsKDoAmpF
-          ysHBDP9hwWlwG2F/NFY4/sh9Q4/ZPOWz0UyklqE=
+          hvcNAQELBQADggEBAEHDhUganq2e3zEjSmxGSjNv9QbUgBk05QIxOt8YJtBmEwx0
+          eSQxE9E8cglWQNr4kL86Z7JpBcZqYc31N0NYiWLimsHrX5udFfCFUZ+c42xtXil6
+          cg/J0epk20q2NLkSsmUl/DT4P6JJl4zrUi7Rf2fQdyUx+SuHcXF0eRKTGG9y6Rx6
+          /myWDGpn3peCq8DfO4b+QyOhchH+HWbrcA7XlxZHWbU4CWDLV8eCNAay9zvhK0SM
+          u2PYROxnd2qkFraMXu1tYWxG84BWsbgycpOnGztpJR8JS3UF2c65fWF7InA6nXKT
+          1x3f+5z5VNAKUZhorIeuH1E0Sb/C6izjLOgCBIs=
           -----END CERTIFICATE-----
 
     - path: /etc/kubernetes/ssl/etcd-node-key.pem
@@ -313,31 +313,31 @@ storage:
       contents:
         inline: |
           -----BEGIN RSA PRIVATE KEY-----
-          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
+          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
           -----END RSA PRIVATE KEY-----
 
     - path: /var/lib/etcd/ssl/etcd-node.pem
@@ -346,20 +346,20 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          MIIFiTCCBHGgAwIBAgIJAPTL44w/+41KMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
+          MIIFiTCCBHGgAwIBAgIJAJUXSmYDMxBlMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
           BAYTAlVTMQswCQYDVQQIDAJOWTERMA8GA1UEBwwITmV3IFlvcmsxETAPBgNVBAoM
-          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIx
-          MjAzNDI0WhcNMjcxMjE5MjAzNDI0WjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
+          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIy
+          MTcxNDEwWhcNMjcxMjIwMTcxNDEwWjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
           TlkxETAPBgNVBAcMCE5ldyBZb3JrMREwDwYDVQQKDAhDb21wYW55MTEMMAoGA1UE
           CwwDT3BzMRIwEAYDVQQDDAlldGNkLW5vZGUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-          DwAwggEKAoIBAQDTTtCGJFpw5mYZYrwP2fWSK2C7f0wpXR5QzqcZToz/ZmSvWNY0
-          N6ja+HtodrpwG4dN/9KlBzNNlcXl1f8jrGcnwheBhNj9rAWR/431jrJAhzbOOCgC
-          zDWDbKw/ySt2GTKJpuwocCOHx5NzY4+ISWkVksGIv27x9Le7axpSKJ5in7JSpIAc
-          UYhxrHJr3+VyBY/vJF40fmeDdw/TqiixuJ9YIuHQBnmM4OxzRHPAD1DB/o23hYfz
-          EYVFaBXOgu0qCMS59U13eGfWECekynn81HLml8/bpoZylxsWvYjhS7UdPmJ4ih+c
-          iNp1rL8TE7kof/bZWuMui+Dy2Ikc5Wgxf6ABAgMBAAGjggJFMIICQTAOBgNVHQ8B
+          DwAwggEKAoIBAQCwOCkXAUGK/L2pC3smRnW62su9O9M+CApNXSI3Z42KMByaUTso
+          H5MbjRCr6rMxKVYZhRifjozphV2dBtka78GK9gMAkHOJflIcdYFPIbyApfdlj6Y+
+          vyiLzQFNxiWxFSZ8Z2bUaCG4u0MlEjag7ncWz1wzBlKcvNcNIk2ny7HuqDjKd88c
+          6spW6iKZQZ31GZzSj5KKvp2gphdOPdlA2hEmkGX+z4dRV26BXyp4k/3u5GbuE3KT
+          BmFBaadHiLnxPHcIxE8FX1z6Fvf8WFgarm5xu/mCmyR5k6N/7slrtj09ndEJPWlD
+          lG6VpgvLKmxEfp7II9S0IClENbTAqnr6qAZXAgMBAAGjggJFMIICQTAOBgNVHQ8B
           Af8EBAMCBeAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB
-          /wQCMAAwHQYDVR0OBBYEFLLBn8nnxrYJ1p+0tU5NL1i9XMtgMIIB4QYDVR0RBIIB
+          /wQCMAAwHQYDVR0OBBYEFKWb075VcQvlLjR+38pTVOHNRfi2MIIB4QYDVR0RBIIB
           2DCCAdSCCmt1YmVybmV0ZXOCEmt1YmVybmV0ZXMuZGVmYXVsdIIWa3ViZXJuZXRl
           cy5kZWZhdWx0LnN2Y4Ika3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxv
           Y2Fsgg5rdWJlLWFwaXNlcnZlcoIKa3ViZS1hZG1pboIJbG9jYWxob3N0ggtibmgu
@@ -370,12 +370,12 @@ storage:
           d29ya2VyMi5leGFtcGxlLmNvbYITd29ya2VyMy5leGFtcGxlLmNvbYcEfwAAAYcE
           AAAAAIcECgMAAYcECgMACocECgMAMocErBQAAYcErBQAAocErBQAC4cErBQADIcE
           rBQADYcErBQAM4cErBQANIcErBQANYERYWRtaW5AZXhhbXBsZS5jb20wDQYJKoZI
-          hvcNAQELBQADggEBAAKsz4RII39IVZGAAo9EO5AqQHIF6pw7r41TiKjUgF1JxhKJ
-          +DRe9lcMKPh9LcOKhZrH7zKLECZaUO1Nq0GzZ6SzRwo9+K7hGB1l1R21tncTdRiK
-          baEPH9lhJWZGHM98WPxMXhHTGo3lf/PClAS2oFpTi1dn8F1BGHWCtUaAnPE6E1GN
-          FowL0RTcyseLHVwMsxNmV6wuYmERySUng3YBPzJdjqKETz7L5YhlsroQTO85/1rW
-          ogryayn7tjaayZ3bLys5D7O29/AVEJZxw2+598c1gSE2dLr+LJYo2utWsKDoAmpF
-          ysHBDP9hwWlwG2F/NFY4/sh9Q4/ZPOWz0UyklqE=
+          hvcNAQELBQADggEBAEHDhUganq2e3zEjSmxGSjNv9QbUgBk05QIxOt8YJtBmEwx0
+          eSQxE9E8cglWQNr4kL86Z7JpBcZqYc31N0NYiWLimsHrX5udFfCFUZ+c42xtXil6
+          cg/J0epk20q2NLkSsmUl/DT4P6JJl4zrUi7Rf2fQdyUx+SuHcXF0eRKTGG9y6Rx6
+          /myWDGpn3peCq8DfO4b+QyOhchH+HWbrcA7XlxZHWbU4CWDLV8eCNAay9zvhK0SM
+          u2PYROxnd2qkFraMXu1tYWxG84BWsbgycpOnGztpJR8JS3UF2c65fWF7InA6nXKT
+          1x3f+5z5VNAKUZhorIeuH1E0Sb/C6izjLOgCBIs=
           -----END CERTIFICATE-----
 
     - path: /var/lib/etcd/ssl/etcd-node-key.pem
@@ -384,31 +384,31 @@ storage:
       contents:
         inline: |
           -----BEGIN RSA PRIVATE KEY-----
-          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
+          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
           -----END RSA PRIVATE KEY-----
 
     - path: /etc/kubernetes/ssl/worker.pem
@@ -417,20 +417,20 @@ storage:
       contents:
         inline: |
           -----BEGIN CERTIFICATE-----
-          MIIFiTCCBHGgAwIBAgIJAPTL44w/+41KMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
+          MIIFiTCCBHGgAwIBAgIJAJUXSmYDMxBlMA0GCSqGSIb3DQEBCwUAMF0xCzAJBgNV
           BAYTAlVTMQswCQYDVQQIDAJOWTERMA8GA1UEBwwITmV3IFlvcmsxETAPBgNVBAoM
-          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIx
-          MjAzNDI0WhcNMjcxMjE5MjAzNDI0WjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
+          CENvbXBhbnkxMQwwCgYDVQQLDANPcHMxDTALBgNVBAMMBEV0Y2QwHhcNMTcxMjIy
+          MTcxNDEwWhcNMjcxMjIwMTcxNDEwWjBiMQswCQYDVQQGEwJVUzELMAkGA1UECAwC
           TlkxETAPBgNVBAcMCE5ldyBZb3JrMREwDwYDVQQKDAhDb21wYW55MTEMMAoGA1UE
           CwwDT3BzMRIwEAYDVQQDDAlldGNkLW5vZGUwggEiMA0GCSqGSIb3DQEBAQUAA4IB
-          DwAwggEKAoIBAQDTTtCGJFpw5mYZYrwP2fWSK2C7f0wpXR5QzqcZToz/ZmSvWNY0
-          N6ja+HtodrpwG4dN/9KlBzNNlcXl1f8jrGcnwheBhNj9rAWR/431jrJAhzbOOCgC
-          zDWDbKw/ySt2GTKJpuwocCOHx5NzY4+ISWkVksGIv27x9Le7axpSKJ5in7JSpIAc
-          UYhxrHJr3+VyBY/vJF40fmeDdw/TqiixuJ9YIuHQBnmM4OxzRHPAD1DB/o23hYfz
-          EYVFaBXOgu0qCMS59U13eGfWECekynn81HLml8/bpoZylxsWvYjhS7UdPmJ4ih+c
-          iNp1rL8TE7kof/bZWuMui+Dy2Ikc5Wgxf6ABAgMBAAGjggJFMIICQTAOBgNVHQ8B
+          DwAwggEKAoIBAQCwOCkXAUGK/L2pC3smRnW62su9O9M+CApNXSI3Z42KMByaUTso
+          H5MbjRCr6rMxKVYZhRifjozphV2dBtka78GK9gMAkHOJflIcdYFPIbyApfdlj6Y+
+          vyiLzQFNxiWxFSZ8Z2bUaCG4u0MlEjag7ncWz1wzBlKcvNcNIk2ny7HuqDjKd88c
+          6spW6iKZQZ31GZzSj5KKvp2gphdOPdlA2hEmkGX+z4dRV26BXyp4k/3u5GbuE3KT
+          BmFBaadHiLnxPHcIxE8FX1z6Fvf8WFgarm5xu/mCmyR5k6N/7slrtj09ndEJPWlD
+          lG6VpgvLKmxEfp7II9S0IClENbTAqnr6qAZXAgMBAAGjggJFMIICQTAOBgNVHQ8B
           Af8EBAMCBeAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB
-          /wQCMAAwHQYDVR0OBBYEFLLBn8nnxrYJ1p+0tU5NL1i9XMtgMIIB4QYDVR0RBIIB
+          /wQCMAAwHQYDVR0OBBYEFKWb075VcQvlLjR+38pTVOHNRfi2MIIB4QYDVR0RBIIB
           2DCCAdSCCmt1YmVybmV0ZXOCEmt1YmVybmV0ZXMuZGVmYXVsdIIWa3ViZXJuZXRl
           cy5kZWZhdWx0LnN2Y4Ika3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxv
           Y2Fsgg5rdWJlLWFwaXNlcnZlcoIKa3ViZS1hZG1pboIJbG9jYWxob3N0ggtibmgu
@@ -441,33 +441,33 @@ storage:
           d29ya2VyMi5leGFtcGxlLmNvbYITd29ya2VyMy5leGFtcGxlLmNvbYcEfwAAAYcE
           AAAAAIcECgMAAYcECgMACocECgMAMocErBQAAYcErBQAAocErBQAC4cErBQADIcE
           rBQADYcErBQAM4cErBQANIcErBQANYERYWRtaW5AZXhhbXBsZS5jb20wDQYJKoZI
-          hvcNAQELBQADggEBAAKsz4RII39IVZGAAo9EO5AqQHIF6pw7r41TiKjUgF1JxhKJ
-          +DRe9lcMKPh9LcOKhZrH7zKLECZaUO1Nq0GzZ6SzRwo9+K7hGB1l1R21tncTdRiK
-          baEPH9lhJWZGHM98WPxMXhHTGo3lf/PClAS2oFpTi1dn8F1BGHWCtUaAnPE6E1GN
-          FowL0RTcyseLHVwMsxNmV6wuYmERySUng3YBPzJdjqKETz7L5YhlsroQTO85/1rW
-          ogryayn7tjaayZ3bLys5D7O29/AVEJZxw2+598c1gSE2dLr+LJYo2utWsKDoAmpF
-          ysHBDP9hwWlwG2F/NFY4/sh9Q4/ZPOWz0UyklqE=
+          hvcNAQELBQADggEBAEHDhUganq2e3zEjSmxGSjNv9QbUgBk05QIxOt8YJtBmEwx0
+          eSQxE9E8cglWQNr4kL86Z7JpBcZqYc31N0NYiWLimsHrX5udFfCFUZ+c42xtXil6
+          cg/J0epk20q2NLkSsmUl/DT4P6JJl4zrUi7Rf2fQdyUx+SuHcXF0eRKTGG9y6Rx6
+          /myWDGpn3peCq8DfO4b+QyOhchH+HWbrcA7XlxZHWbU4CWDLV8eCNAay9zvhK0SM
+          u2PYROxnd2qkFraMXu1tYWxG84BWsbgycpOnGztpJR8JS3UF2c65fWF7InA6nXKT
+          1x3f+5z5VNAKUZhorIeuH1E0Sb/C6izjLOgCBIs=
           -----END CERTIFICATE-----
           -----BEGIN CERTIFICATE-----
-          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
+          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
-          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
+          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
-          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
+          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
           -----END CERTIFICATE-----
 
     - path: /etc/kubernetes/ssl/worker-key.pem
@@ -476,31 +476,31 @@ storage:
       contents:
         inline: |
           -----BEGIN RSA PRIVATE KEY-----
-          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
+          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
           -----END RSA PRIVATE KEY-----
 
     - path: /etc/profile.d/aliases.sh
@@ -526,10 +526,10 @@ storage:
           FLANNELD_IFACE="enp0s3"
           FLANNELD_ETCD_ENDPOINTS=${ETCDCTL_ENDPOINTS}
           FLANNELD_ETCD_PREFIX="/coreos.com/network"
-          HTTP_PROXY=HTTP_PROXY=
-          HTTPS_PROXY=HTTPS_PROXY=
-          #http_proxy=http_proxy=
-          #https_proxy=https_proxy=
+          HTTP_PROXY=#HTTP_PROXY=
+          HTTPS_PROXY=#HTTPS_PROXY=
+          #http_proxy=#http_proxy=
+          #https_proxy=#https_proxy=
           no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,172.20.0.11,172.20.0.12,172.20.0.13,coreos1,coreos2,coreos3,coreos1.example.com,coreos2.example.com,coreos3.example.com,/var/run/docker.sock
     - path: /etc/systemd/system/docker.service.d/40-flannel.conf
       filesystem: root
@@ -685,9 +685,9 @@ storage:
 passwd:
   users:
     - name: usera
-      password_hash: "$6$576fd6776b0e48cd$ByKFsBEhkCMwsbTiGJeBfQLzRRIBWBDjnQFjkNEZ/kaZGqHDQUyjrTZ06dzW7gf8FelaF2I.1LMhYafMr/Xdn0"
+      password_hash: "$6$5c7dac87f5a74401$N0l/hMuMsnn0DEBZfJDZZKs0iMCFhzSQ.UHDs0IlKYwMCfOZBWESyhFL0PpzKNIltyLQGu5bXCASpdADZZAlY0"
       ssh_authorized_keys:
-        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6CXvOoivC5J0qTBsXDSiZ9HC7ZWWqY+59WvTRtmzdgBkfbOy4TSepukpNUSy2EeY+JINXnLVCS1EUwrCZBMuDwJXrtOCDizjz5+CYcgn0Fn+y81erWUbjlTUWlgGfHksUU6PJGHlNWEt2WHgOolHGrf0bjLWJ1yflUCd/sFxE0reYblp/J3y7oBbkjRSGmgHvkG4p56cdtYXKl2kqinn25Ezo3Op5wwDwfBYTJ8qhN6b0Yfp0ZW252KvbGaiVn27jIJmfRXn2n6p9IqS4O9AnsQgRMHAhbnjp4SsiihaIvcJFUQ/E7LjRnD0Rz1r7yePQudfMAU//5u2CmUlCYtvB"
+        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC9i+2fKwFoGIcRXMJL872fgcxVxyHW36QfprxFR97NVTGy4mZdJ2u3pC0aAIJ5egopcVL98HPVtGpDK9AIee8/WV4O8/0yTfxaUmnC+LImxzKBkfV3ftg2fpikRIACTvxpyKt+4NZfOmniGClX/wRQH4jb4KU9eLshEuhpFQyCikL8xG5bGnxRs5QxnkSeKq8nNptcWZJtfSv19q1qcLkBL+bV10AmAxF+o5TfeOLTKnxdKJdNu1QqK1xG7bHDPL4FP0Pktb6knPPX9H+95bPBemVTpRbluJvqhqeJ6I7wwaQvKK1Iegj+cgtwBDeBfs7yBRhl+boFtr8Nmcf1mikB"
       home_dir: /home/usera
       groups:
         - sudo
@@ -717,10 +717,10 @@ systemd:
           contents: |
             [Service]
             Environment=DOCKER_OPTS=''
-            #Environment=HTTP_PROXY=HTTP_PROXY=
-            #Environment=HTTPS_PROXY=HTTPS_PROXY=
-            #Environment=http_proxy=http_proxy=
-            #Environment=https_proxy=https_proxy=
+            #Environment=HTTP_PROXY=#HTTP_PROXY=
+            #Environment=HTTPS_PROXY=#HTTPS_PROXY=
+            #Environment=http_proxy=#http_proxy=
+            #Environment=https_proxy=#https_proxy=
             #Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,172.20.0.11,172.20.0.12,172.20.0.13,coreos1,coreos2,coreos3,coreos1.example.com,coreos2.example.com,coreos3.example.com,/var/run/docker.sock
 
     - name: flanneld.service
@@ -844,10 +844,10 @@ systemd:
         [Service]
         Slice=system.slice
         Environment=KUBELET_IMAGE_TAG=v1.8.0_coreos.0
-        Environment=HTTP_PROXY=HTTP_PROXY=
-        Environment=HTTPS_PROXY=HTTPS_PROXY=
-        #Environment=http_proxy=http_proxy=
-        #Environment=https_proxy=https_proxy=
+        Environment=HTTP_PROXY=#HTTP_PROXY=
+        Environment=HTTPS_PROXY=#HTTPS_PROXY=
+        #Environment=http_proxy=#http_proxy=
+        #Environment=https_proxy=#https_proxy=
         Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,172.20.0.11,172.20.0.12,172.20.0.13,coreos1,coreos2,coreos3,coreos1.example.com,coreos2.example.com,coreos3.example.com,/var/run/docker.sock
         ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
         ExecStartPre=/usr/bin/mkdir -p /var/log/containers
