@@ -172,6 +172,9 @@
             { "#WORK_KEY_FILE#":  
               [{"work_key_file":  "/etc/kubernetes/ssl/worker-key.pem"}]
             },
+            { "#CA_KEY_FILE1#":  
+              [{"work_key_file":  "/etc/kubernetes/ssl/ca-key.pem"}]
+            },
             { "#INITIAL_CLUSTER_STATE#":  
               [{"initial_cluster_state":  "new"}]
             },

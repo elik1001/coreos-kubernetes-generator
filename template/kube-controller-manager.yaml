@@ -19,7 +19,7 @@ spec:
         - --service-cluster-ip-range=10.3.0.0/21
         - --service-account-private-key-file=#ETCDCTL_KEY_FILE2#
         - --root-ca-file=#CA_FILE1#
-        - --cluster-signing-key-file=#CA_FILE1#
+        - --cluster-signing-key-file=#CA_KEY_FILE1#
         - --service-account-private-key-file=#ETCDCTL_KEY_FILE2#
         - --root-ca-file=#CA_FILE1#
         - --cluster-signing-cert-file=#CA_FILE1#

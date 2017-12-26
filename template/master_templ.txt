@@ -118,6 +118,12 @@ storage:
       contents:
         inline: |
 #CA_CERT#
+    - path: #CA_KEY_FILE1#
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+#CA_KEY#
     - path: #ETCDCTL_CERT_FILE2#
       filesystem: root
       mode: 0644
