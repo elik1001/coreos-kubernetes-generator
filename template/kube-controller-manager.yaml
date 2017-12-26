@@ -37,7 +37,7 @@ spec:
         - mountPath: /var/log/kube-controller-manager.log
           name: logfile
           readOnly: false
-        - mountPath: #KUB_SSL_DIR#"
+        - mountPath: #KUB_SSL_DIR#
           name: "kube-ssl"
           readOnly: true
       volumes:
