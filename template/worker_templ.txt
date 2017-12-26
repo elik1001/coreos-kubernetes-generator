@@ -70,8 +70,8 @@ storage:
           LOCKSMITHCTL_ETCD_CERTFILE=#ETCDCTL_CERT_FILE1#
           LOCKSMITHCTL_ETCD_KEYFILE=#ETCDCTL_KEY_FILE1#
           LOCKSMITHCTL_ENDPOINT="https://#THIS_NODE_IP#:2379"
-          HTTP_PROXY=#HTTP_PROXY2#
-          HTTPS_PROXY=#HTTPS_PROXY2#
+          #HTTP_PROXY=#HTTP_PROXY2#
+          #HTTPS_PROXY=#HTTPS_PROXY2#
           #http_proxy=#HTTP_PROXY1#
           #https_proxy=#HTTPS_PROXY1#
           #no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
