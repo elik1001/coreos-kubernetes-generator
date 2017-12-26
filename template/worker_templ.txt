@@ -257,7 +257,7 @@ storage:
           - context:
               cluster: local
               user: kubelet
-    - path: /etc/kubernetes/kubeconfig.yaml 
+    - path: /etc/kubernetes/ssl/kubeconfig.yaml 
       filesystem: root
       mode: 0644
       contents:
@@ -483,7 +483,7 @@ systemd:
           --tls-cert-file=#ETCDCTL_CERT_FILE2# \
           --tls-private-key-file=#ETCDCTL_KEY_FILE2# \
           --client-ca-file=#CA_FILE3# \
-          --kubeconfig=/etc/kubernetes/kubeconfig.yaml \
+          --kubeconfig=/etc/kubernetes/ssl/kubeconfig.yaml \
           --cluster-dns=#CLUSTER_DNS# \
           --cluster-domain=cluster.local \
           --network-plugin=cni \
