@@ -83,9 +83,9 @@ storage:
           [Manager]
           #DefaultEnvironment=##HTTP_PROXY1#
           #DefaultEnvironment=##HTTPS_PROXY1#
-          #DefaultEnvironment=#HTTP_PROXY2#
-          #DefaultEnvironment=#HTTPS_PROXY2#
-          #DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
+          DefaultEnvironment=#HTTP_PROXY2#
+          DefaultEnvironment=#HTTPS_PROXY2#
+          DefaultEnvironment="no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock"
     - path: /etc/systemd/system/docker.service.d/environment.conf
       filesystem: root
       mode: 0644
