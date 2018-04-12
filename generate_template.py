@@ -6,7 +6,7 @@
 #version         :0.5
 #usage           :python generate_template.py
 #notes           :
-#python_version  :2.7.14
+#python_version  :2.7.14 or 3.6.3
 #==============================================================================
 from __future__ import print_function   # fix print code to work in python 2 and 3!
 real_raw_input = vars(__builtins__).get('raw_input',input)  # fix raw_input code to work in python 2 and 3!
