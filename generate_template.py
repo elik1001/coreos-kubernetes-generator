@@ -23,7 +23,7 @@ ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/d
 kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl'
 cert_config = 'cert.conf'
 msg_list = 'src/msg_list'
-no_mkisofs = "y"
+no_mkisofs = 'y'
 required_pkgs = {
     're': ['re'],
     'ast': ['ast'],
@@ -431,16 +431,16 @@ def update_dict_src(dict_update, file_dst):
 def install_platform_pkg():
     if 'Ubuntu' in platform.dist()[0]:
        print_msg(['96'])
-       return "apt-get -y install genisoimage"
+       return 'apt-get -y install genisoimage'
     elif 'redhat' in platform.dist()[0]:
        print_msg(['97'])
-       return "yum -y install mkisofs"
+       return 'yum -y install mkisofs'
     elif '' in platform.dist()[0]:
        print_msg(['108']), print_msg(['10'])
        print ('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
        print_msg(['10'])
-       no_mkisofs = "y"
-       return "no_mkisofs"
+       no_mkisofs = 'y'
+       return 'no_mkisofs'
 
 # ===========================================================
 #    ******************** Main *************************
@@ -736,10 +736,10 @@ if not app_exists('mkisofs'):
   print_msg(['93'])
   ext_cmd(install_platform_pkg())
 else:
-  no_mkisofs = "n"
+  no_mkisofs = 'n'
   print_msg(['95'])
 
-if no_mkisofs == "n":
+if no_mkisofs == 'n':
   print_msg(['77']), print_msg(['10'])
   ext_cmd('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
 
