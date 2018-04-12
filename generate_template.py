@@ -213,7 +213,7 @@ def create_certs(ssl, msg, sslpem):
         print_msg(['8']), print_msg(['13']), print_msg(['10'])
 
 def ext_cmd(cmd):
-    if cmd != "no_mkisofs":
+    if cmd != 'no_mkisofs':
       proces = subprocess.Popen(cmd, shell=True,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
