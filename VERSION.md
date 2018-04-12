@@ -1,4 +1,14 @@
 <h1>Version history</h1>
+<h2>Version 0.5</h2>
+<b>Update/Fix: Python 3.x compatibility</b>
+<ul>
+    <li>
+        <b>update: </b>
+        <br>Updated the script to work with Python 3.x as well.
+        <br><b>Note: </b>The old script is still available and was renamed to <i>generate_template-python_2_only.py</i>.
+    </li>
+</ul>
+
 <h2>Version 0.2</h2>
 <ul>
     <li>
