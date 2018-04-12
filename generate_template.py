@@ -23,6 +23,7 @@ ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/d
 kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl'
 cert_config = 'cert.conf'
 msg_list = 'src/msg_list'
+no_mkisofs = "y"
 required_pkgs = {
     're': ['re'],
     'ast': ['ast'],
@@ -212,17 +213,19 @@ def create_certs(ssl, msg, sslpem):
         print_msg(['8']), print_msg(['13']), print_msg(['10'])
 
 def ext_cmd(cmd):
-    proces = subprocess.Popen(cmd, shell=True,
-                           stdout=subprocess.PIPE,
-                           stderr=subprocess.PIPE)
+    if cmd != "no_mkisofs":
+      proces = subprocess.Popen(cmd, shell=True,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
 
-    for line in proces.stderr:
-      logger(line)
-      logger(cmd)
-      errcode = proces.returncode
-      if errcode:
-        logger(errcode)
+      for line in proces.stderr:
+        logger(line)
         logger(cmd)
+        errcode = proces.returncode
+        if errcode:
+          logger(errcode)
+          logger(cmd)
+      print_msg(['94'])
 
 #=====================================
 # SSL and CT log output
@@ -432,18 +435,21 @@ def install_platform_pkg():
     elif 'redhat' in platform.dist()[0]:
        print_msg(['97'])
        return "yum -y install mkisofs"
-    else:
-       print ('We are unable to identify your OS platform, please install "mkisofs" and run manually to create an ISO.')
+    elif '' in platform.dist()[0]:
+       print_msg(['108']), print_msg(['10'])
        print ('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
+       print_msg(['10'])
+       no_mkisofs = "y"
+       return "no_mkisofs"
 
 # ===========================================================
 #    ******************** Main *************************
 # ===========================================================
 
 # Verifying required openssl
-if not app_exists('openssl'):
-   print ('Missing required dependency (openssl), please install openssl, then re-run. \nExiting.')
-   sys.exit(0)
+#if not app_exists('openssl'):
+   #print ('Missing required dependency (openssl), please install openssl, then re-run. \nExiting.')
+   #sys.exit(0)
 
 # Verifying required python modules
 #-------------------------------------
@@ -729,12 +735,13 @@ print_msg(['92'])
 if not app_exists('mkisofs'):
   print_msg(['93'])
   ext_cmd(install_platform_pkg())
-  print_msg(['94'])
 else:
+  no_mkisofs = "n"
   print_msg(['95'])
 
-print_msg(['77']), print_msg(['10'])
-ext_cmd('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
+if no_mkisofs == "n":
+  print_msg(['77']), print_msg(['10'])
+  ext_cmd('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
 
 # Download Kubectl if not available
 #-------------------------------------
@@ -760,4 +767,4 @@ print_msg(['68']),
 print_msg(['69']),
 print_msg(['70']), print_msg('configs/' + this_host_name), sys.stdout.write(''), print_msg('_template.yaml'),
 print_msg(['71']), print_msg(ign_template), print_msg('\n'),
-print_msg(['78']), print_msg('configs/' + this_host_name), sys.stdout.write(''), print_msg('_template.iso')
+print_msg(['78']), print_msg('configs/' + this_host_name), sys.stdout.write(''), print_msg('_template.iso'), print_msg('\n')
