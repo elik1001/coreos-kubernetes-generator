@@ -4,7 +4,7 @@
 <ul>
     <li>
         <b>update: </b>
-        <br>Updated the script to work with Python 3.x as well.
+        <br>Updated the script to work with Python 3.x.
         <br><b>Note: </b>The old script is still available and was renamed to <i>generate_template-python_2_only.py</i>.
     </li>
 </ul>
