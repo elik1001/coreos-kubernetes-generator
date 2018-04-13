@@ -12,6 +12,8 @@ The script uses a wizard-like approach with a minimum set of questions, just to 
 
 <h3>Getting Started</h3>
 
+<b>Please read the <a href="VERSION.md">change log</a> before you begin.</b>
+
 <h4>Installation</h4>
 <h4>Dependencies / Prerequisites</h4>
 <b>The following libraries are required:</b>
@@ -37,6 +39,9 @@ from contextlib import contextmanager
 Crypto.PublicKey.RSA
 </pre>
 <i>Note: </i>You can manually install libraries by running <i>pip install [library]</i>
+<br>At the current time, <i>openssl</i> is required, as its used as part of the certificate creation.
+<br>(this requirement will be removed once certificate creation is fully done in Python).
+
 
 <h4>Usage examples</h4>
 To use the application just run the <i>./generate_template.py</i>.

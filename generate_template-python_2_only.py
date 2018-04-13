@@ -2,14 +2,12 @@
 #title           :generate_template.py
 #description     :This will create a header for a python script.
 #author          :Eli Kleinman
-#date            :20180412
-#version         :0.5
+#date            :20171219
+#version         :0.2
 #usage           :python generate_template.py
 #notes           :
-#python_version  :2.7.14 or 3.6.3
+#python_version  :2.7.14
 #==============================================================================
-from __future__ import print_function   # fix print code to work in python 2 and 3!
-real_raw_input = vars(__builtins__).get('raw_input',input)  # fix raw_input code to work in python 2 and 3!
 import sys
 import os
 import pip
@@ -23,7 +21,6 @@ ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/d
 kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl'
 cert_config = 'cert.conf'
 msg_list = 'src/msg_list'
-no_mkisofs = 'y'
 required_pkgs = {
     're': ['re'],
     'ast': ['ast'],
@@ -177,17 +174,17 @@ def gen_ssh_key():
     # Create private key
     key = Crypto.PublicKey.RSA.generate(2048)
     private_key = key.exportKey('PEM')
-    f = open('keys/id_rsa','wb')
+    f = open('keys/id_rsa','w')
     f.write(private_key)
     f.close()
 
     # Create public key
     pubkey = key.publickey()
     public_key = pubkey.exportKey('OpenSSH')
-    f = open('keys/id_rsa.pub','wb')
+    f = open('keys/id_rsa.pub','w')
     f.write(public_key)
     f.close()
-    return (private_key, public_key.decode("utf-8"))
+    return (private_key, public_key)
 
 #=====================================
 # Generate Kubernetes SSL certificates
@@ -213,25 +210,23 @@ def create_certs(ssl, msg, sslpem):
         print_msg(['8']), print_msg(['13']), print_msg(['10'])
 
 def ext_cmd(cmd):
-    if cmd != 'no_mkisofs':
-      proces = subprocess.Popen(cmd, shell=True,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+    proces = subprocess.Popen(cmd, shell=True,
+                           stdout=subprocess.PIPE,
+                           stderr=subprocess.PIPE)
 
-      for line in proces.stderr:
-        logger(line)
+    for line in proces.stderr:
+      logger(line)
+      logger(cmd)
+      errcode = proces.returncode
+      if errcode:
+        logger(errcode)
         logger(cmd)
-        errcode = proces.returncode
-        if errcode:
-          logger(errcode)
-          logger(cmd)
-      print_msg(['94'])
 
 #=====================================
 # SSL and CT log output
 def logger(log):
     f = open('output.log', 'a+')
-    f.write(str(log) + '\n')
+    f.write(log + '\n')
     sys.stdout.flush()
     f.close()
 
@@ -288,10 +283,10 @@ def modify_source(update_source, x, y):
 
 def prepare_source(update_source, i, host_name, ip_addr):
 
-    new_host_name = real_raw_input('Please provide the \"Master' + \
+    new_host_name = raw_input('Please provide the \"Master' + \
                              (re.findall(r'\d+', host_name)[0]) + \
                              '\" hostname (default: ' + host_name + ')?: ') or host_name
-    new_ip_addr = real_raw_input('Please provide the master' + \
+    new_ip_addr = raw_input('Please provide the master' + \
                            (re.findall(r'\d+', host_name)[0]) + \
                            '(' + new_host_name + ') \"ip address\" (default: ' + ip_addr + ') ?: ') or ip_addr
 
@@ -320,7 +315,7 @@ def mod_set_yn(msg, default):
 # Update Certificate alt names
 def mod_global_set(global_settings, i, x):
 
-    new_prop = real_raw_input('Please enter the new value for ' + \
+    new_prop = raw_input('Please enter the new value for ' + \
                          global_settings[i][0] + '(default: ' + x + '): ') or x
     global_settings[i][1] = new_prop
     return global_settings
@@ -405,13 +400,13 @@ def update_alt_crt(alt_cert, x, y):
 
 def mod_global_set(alt_cert, i, x):
 
-    new_prop = real_raw_input('Please enter the new value for ' + alt_cert[i][0] + ': (default: ' + x + '): ') or x
+    new_prop = raw_input('Please enter the new value for ' + alt_cert[i][0] + ': (default: ' + x + '): ') or x
     alt_cert[i][1] = new_prop
     return alt_cert
 
 def add_cert_val(val_list, name, rec, n_rec):
     add_value = '-'
-    add_value = real_raw_input('Please Enter additional ' + name + ' , one per line. (leave empty when done): ') or add_value
+    add_value = raw_input('Please Enter additional ' + name + ' , one per line. (leave empty when done): ') or add_value
 
     if not add_value == '-':
       val_list.update({str(rec): [n_rec, add_value]})
@@ -431,48 +426,37 @@ def update_dict_src(dict_update, file_dst):
 def install_platform_pkg():
     if 'Ubuntu' in platform.dist()[0]:
        print_msg(['96'])
-       return 'apt-get -y install genisoimage'
+       return "apt-get -y install genisoimage"
     elif 'redhat' in platform.dist()[0]:
        print_msg(['97'])
-       return 'yum -y install mkisofs'
-    elif '' in platform.dist()[0]:
-       print_msg(['108']), print_msg(['10'])
-       print ('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
-       print_msg(['10'])
-       no_mkisofs = 'y'
-       return 'no_mkisofs'
+       return "yum -y install mkisofs"
 
 # ===========================================================
 #    ******************** Main *************************
 # ===========================================================
 
-# Verifying required openssl
-#if not app_exists('openssl'):
-   #print ('Missing required dependency (openssl), please install openssl, then re-run. \nExiting.')
-   #sys.exit(0)
-
 # Verifying required python modules
 #-------------------------------------
-print ('Verifying required python modules \
-\n-----------------------------------------------------------')
+print 'Verifying required python modules \
+\n-----------------------------------------------------------'
 for pkg in required_pkgs:
   try:
     globals()[required_pkgs[pkg][0]] = __import__(required_pkgs[pkg][0])
-    print ('Skipping module: ' + pkg + ', already installed')
-  except ImportError as e:
-    print ('\n-----------------------------------------------------------')
-    answr_yn = real_raw_input('You are missing a required Python module: ' + pkg + \
+    print 'Skipping module: ' + pkg + ', already installed'
+  except ImportError, e:
+    print '\n-----------------------------------------------------------'
+    answr_yn = raw_input('You are missing a required Python module: ' + pkg + \
     '\nShould we try to install the \"' + pkg + '\" module ?[n] ')
     if answr_yn == 'y':
-      print ('Installing missing module: ' + pkg)
+      print 'Installing missing module: ' + pkg
       with suppress_stdout():
         pip.main(['install', pkg])
         globals()[required_pkgs[pkg][0]] = __import__(required_pkgs[pkg][0])
     else:
-      print ('\n----------------------------------------------------------- \
-      \nMissing required module(s), exiting safely')
+      print '\n----------------------------------------------------------- \
+      \nMissing required module(s), exiting safely'
       exit(1)
-print ('-----------------------------------------------------------\n')
+print '-----------------------------------------------------------\n'
 
 #--------------------------------------------
 # ----- Pre-load the print message list -----
@@ -485,11 +469,11 @@ def print_msg(msg):
     elif 'return2' in msg[0]:
       return msg[1] + msg[2]
     elif isinstance(msg, list):
-      print (print_list[msg[0]][0], end='')
+      print print_list[msg[0]][0],
     elif msg == '\n':
-      print ('\n', end='')
+      print '\n',
     else:
-      print (msg, end='')
+      print msg,
 
 #-------------------------------------
 # Load data from dictionarie files.
@@ -518,7 +502,7 @@ for i in manifests_files:
   print_msg(['81']), print_msg(i), print_msg('\n')
   prep_template('template/' + i, 'manifests/' + i, 'cp')
 
-print ('-----------------------------------------------------------\n')
+print '-----------------------------------------------------------\n'
 f = open(replace_template, 'r')
 update_source = f.read()
 f.close()
@@ -543,7 +527,7 @@ print_msg(['10'])
 # Set User login / Password
 #-------------------------------------
 print_msg(['32']), print_msg(['33']), print_msg(['10'])
-user_account = real_raw_input(print_msg(['return1', '34'])) or user_acct
+user_account = raw_input(print_msg(['return1', '34'])) or user_acct
 
 pass_hash = gen_pass_hash(user_account, password)
 
@@ -558,10 +542,10 @@ if global_mod_yn:
   if global_settings['#HTTP_PROXY2@'][1]:
     proxy_addr = re.split(':|@|/', global_settings['#HTTP_PROXY2@'][1])[-2]
     proxy_port =  re.split(':|@|/', global_settings['#HTTP_PROXY2@'][1])[-1]
-  proxy_addr = real_raw_input(print_msg(['return1', '103'])) or proxy_addr
-  proxy_port = real_raw_input(print_msg(['return1', '104'])) or proxy_port
+  proxy_addr = raw_input(print_msg(['return1', '103'])) or proxy_addr
+  proxy_port = raw_input(print_msg(['return1', '104'])) or proxy_port
   print_msg(['105'])
-  proxy_account = real_raw_input(print_msg(['return1', '106']))
+  proxy_account = raw_input(print_msg(['return1', '106']))
   if proxy_account:
     user_passwd = getpass.getpass(print_msg(['return1', '107']))
     global_settings['#HTTP_PROXY2@'][1] = "HTTP_PROXY=http://"+proxy_account+":"+user_passwd+"@"+proxy_addr+":"+proxy_port
@@ -580,11 +564,11 @@ print_msg(['36'])
 # Set Properties like user/passwd, ip/host in template files
 #-------------------------------------
 print_msg(['42'])
-this_host_name = real_raw_input(print_msg(['return2', master_nodes['node1'][0], '): '])) \
+this_host_name = raw_input(print_msg(['return2', master_nodes['node1'][0], '): '])) \
                            or master_nodes['node1'][0]
 
 print_msg(['44']), print_msg(this_host_name), print_msg(['45'])
-this_ip_addr = real_raw_input(print_msg(['return2', master_nodes['node1'][1], '): '])) \
+this_ip_addr = raw_input(print_msg(['return2', master_nodes['node1'][1], '): '])) \
                          or master_nodes['node1'][1]
 
 #-------------------------------------
@@ -631,7 +615,7 @@ for i in sorted(global_settings, key=lambda s: s.lower()):
 update_dict_src(global_settings, dict_list['global_settings'][0])
 
 # Write all changes to template file
-f = open(replace_template,'w')
+f = open(replace_template,'wb')
 f.write(update_source)
 f.close()
 
@@ -735,13 +719,12 @@ print_msg(['92'])
 if not app_exists('mkisofs'):
   print_msg(['93'])
   ext_cmd(install_platform_pkg())
+  print_msg(['94'])
 else:
-  no_mkisofs = 'n'
   print_msg(['95'])
 
-if no_mkisofs == 'n':
-  print_msg(['77']), print_msg(['10'])
-  ext_cmd('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
+print_msg(['77']), print_msg(['10'])
+ext_cmd('mkisofs -l -r -o configs/' + this_host_name + '_template.iso configs/' + this_host_name + '_template.ign')
 
 # Download Kubectl if not available
 #-------------------------------------
@@ -767,4 +750,4 @@ print_msg(['68']),
 print_msg(['69']),
 print_msg(['70']), print_msg('configs/' + this_host_name), sys.stdout.write(''), print_msg('_template.yaml'),
 print_msg(['71']), print_msg(ign_template), print_msg('\n'),
-print_msg(['78']), print_msg('configs/' + this_host_name), sys.stdout.write(''), print_msg('_template.iso'), print_msg('\n')
+print_msg(['78']), print_msg('configs/' + this_host_name), sys.stdout.write(''), print_msg('_template.iso')
