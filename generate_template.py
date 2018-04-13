@@ -447,9 +447,9 @@ def install_platform_pkg():
 # ===========================================================
 
 # Verifying required openssl
-#if not app_exists('openssl'):
-   #print ('Missing required dependency (openssl), please install openssl, then re-run. \nExiting.')
-   #sys.exit(0)
+if not app_exists('openssl'):
+   print ('Missing required dependency (openssl), please install openssl, then re-run. \nExiting.')
+   sys.exit(0)
 
 # Verifying required python modules
 #-------------------------------------
