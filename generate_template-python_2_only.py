@@ -5,7 +5,7 @@
 #date            :20171219
 #version         :0.2
 #usage           :python generate_template.py
-#notes           :
+#notes           :Works with kubernetes 1.8.x
 #python_version  :2.7.14
 #==============================================================================
 import sys

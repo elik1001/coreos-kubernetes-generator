@@ -2,10 +2,10 @@
 #title           :generate_template.py
 #description     :This will create a header for a python script.
 #author          :Eli Kleinman
-#date            :20180412
-#version         :0.5
+#date            :20181224
+#version         :0.7
 #usage           :python generate_template.py
-#notes           :
+#notes           :Works with kubernetes version 1.13.x+ 
 #python_version  :2.7.14 or 3.6.3
 #==============================================================================
 from __future__ import print_function   # fix print code to work in python 2 and 3!
@@ -19,8 +19,8 @@ os.environ['PATH'] += os.pathsep + '.'
 user_acct = 'usera'
 password = 'Admin_Password'
 replace_template = 'tmp/modifylist.txt'
-ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.5.0/ct-v0.5.0-x86_64-unknown-linux-gnu'
-kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.8.0/bin/linux/amd64/kubectl'
+ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.9.0/ct-v0.9.0-x86_64-unknown-linux-gnu'
+kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.13.1/bin/linux/amd64/kubectl'
 cert_config = 'cert.conf'
 msg_list = 'src/msg_list'
 no_mkisofs = 'y'
@@ -60,6 +60,7 @@ dir_list = [
 ]
 dict_list = {
     'master_nodes': ['src/master_list.txt'], 
+    'worker_nodes': ['src/worker_list.txt'], 
     'global_settings': ['src/global_settings.txt'], 
     'ca_ssl_list': ['src/ca_ssl_list.txt'], 
     'ssl_list': ['src/ssl_list.txt'], 
@@ -93,10 +94,10 @@ def server_type():
 
     if answers['master_worker'] == 'Master':
       print_msg(['1'])
-      return 'tmp/master_templ.txt'
+      return 'tmp/master_templ.txt', "Master"
     else:
       print_msg(['2'])
-      return 'tmp/worker_templ.txt'
+      return 'tmp/worker_templ.txt', "Worker"
 
 #=====================================
 # Preparing template files
@@ -495,11 +496,16 @@ def print_msg(msg):
 # Load data from dictionarie files.
 print_msg(['83']), print_msg(['10']),
 master_nodes = load_lists(dict_list['master_nodes'][0], 'master_nodes')
+worker_nodes = load_lists(dict_list['worker_nodes'][0], 'worker_nodes')
 global_settings = load_lists(dict_list['global_settings'][0], 'global_settings')
 ca_ssl_list = load_lists(dict_list['ca_ssl_list'][0], 'ca_ssl_list')
 ssl_list = load_lists(dict_list['ssl_list'][0], 'ssl_list')
 srv_cert_list = load_lists(dict_list['srv_cert_list'][0], 'srv_cert_list')
 ip_cert_list = load_lists(dict_list['ip_cert_list'][0], 'ip_cert_list')
+if global_settings['#TOKEN@'][1] is None:
+    token = uuid.uuid4().hex[0:32]
+else:
+    token = global_settings['#TOKEN@'][1]
 
 #-------------------------------------
 # Preparing directorys and template files
@@ -525,7 +531,7 @@ f.close()
 
 # Select a Server type
 #-------------------------------------
-server_template = server_type()
+server_template, server_type_selected = server_type()
 print_msg(['10'])
 
 # Download CT if not available
@@ -580,12 +586,20 @@ print_msg(['36'])
 # Set Properties like user/passwd, ip/host in template files
 #-------------------------------------
 print_msg(['42'])
-this_host_name = real_raw_input(print_msg(['return2', master_nodes['node1'][0], '): '])) \
+if server_type_selected == "Master":
+    this_host_name = real_raw_input(print_msg(['return2', master_nodes['node1'][0], '): '])) \
                            or master_nodes['node1'][0]
+else:
+    this_host_name = real_raw_input(print_msg(['return2', worker_nodes['worke1'][0], '): '])) \
+                           or worker_nodes['worke1'][0]
 
 print_msg(['44']), print_msg(this_host_name), print_msg(['45'])
-this_ip_addr = real_raw_input(print_msg(['return2', master_nodes['node1'][1], '): '])) \
+if server_type_selected == "Master":
+    this_ip_addr = real_raw_input(print_msg(['return2', master_nodes['node1'][1], '): '])) \
                          or master_nodes['node1'][1]
+else:
+    this_ip_addr = real_raw_input(print_msg(['return2', worker_nodes['worke1'][1], '): '])) \
+                         or worker_nodes['worke1'][1]
 
 #-------------------------------------
 # Update system properties
@@ -594,12 +608,14 @@ update_source = modify_source(update_source, '#THIS_NODE_IP@', this_ip_addr)
 update_source = modify_source(update_source, '#USER@', user_account)
 update_source = modify_source(update_source, '#PASSWD@', pass_hash)
 update_source = modify_source(update_source, '#SSH_KEY@', pub_key)
+update_source = modify_source(update_source, '#TOKEN@', token)
 
 global_settings['#THIS_NODE@'][1] = this_host_name
 global_settings['#THIS_NODE_IP@'][1] = this_ip_addr
 global_settings['#USER@'][1] = user_account
 global_settings['#PASSWD@'][1] = pass_hash
 global_settings['#SSH_KEY@'][1] = pub_key
+global_settings['#TOKEN@'][1] = token
 
 print_msg(['46']), print_msg(['47']), print_msg(['10'])
 for i in sorted(master_nodes):

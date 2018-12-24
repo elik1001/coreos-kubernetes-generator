@@ -227,12 +227,13 @@ storage:
           [Service]
           ExecStartPre=/usr/bin/ln -sf /etc/flannel/options.env /run/flannel/options.env
           ExecStartPre=/usr/bin/ln -sf /etc/kubernetes/cni/net.d /etc/rkt/net.d
+          ExecStartPre=/usr/bin/ln -sf /etc/kubernetes/ssl /etc/kubernetes/pki
     - path: /etc/kubernetes/kubelet.env
       filesystem: root
       mode: 0644
       contents:
         inline: |
-          KUBELET_IMAGE_URL=quay.io/coreos/hyperkube
+          KUBELET_IMAGE_URL=gcr.io/google_containers/hyperkube
           KUBELET_VERSION=#KUBELET_VERSION#
     - path: /etc/kubernetes/ssl/kubeconfig.yaml 
       filesystem: root
@@ -255,6 +256,113 @@ storage:
           - context:
               cluster: local
               user: kubelet
+    - path: /etc/kubernetes/ssl/bootstrap-kubeconfig.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          apiVersion: v1
+          kind: Config
+          clusters:
+          - name: local
+            cluster:
+              certificate-authority: #CA_FILE3#
+              server: https://#NODE1_IP#:443
+          contexts:
+          - context:
+              cluster: local
+              user: tls-bootstrap-token-user
+            name: tls-bootstrap-token-user@kubernets
+          current-context: tls-bootstrap-token-user@kubernets
+          preferences: {}
+          users:
+          - name: tls-bootstrap-token-user
+            user:
+              token: #TOKEN#
+    - path: /etc/kubernetes/ssl/token-bootstrap-auth.csv
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          #TOKEN##TOKEN_DETAIL#
+    - path: /etc/kubernetes/config.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          address: 0.0.0.0
+          apiVersion: kubelet.config.k8s.io/v1beta1
+          authentication:
+            anonymous:
+              enabled: false
+            webhook:
+              cacheTTL: 2m0s
+              enabled: true
+            x509:
+              clientCAFile: /etc/kubernetes/ssl/ca.pem
+          authorization:
+            mode: Webhook
+            webhook:
+              cacheAuthorizedTTL: 5m0s
+              cacheUnauthorizedTTL: 30s
+          cgroupDriver: cgroupfs
+          cgroupsPerQOS: true
+          clusterDNS:
+          - 10.3.0.10
+          clusterDomain: cluster.local
+          containerLogMaxFiles: 5
+          containerLogMaxSize: 10Mi
+          contentType: application/vnd.kubernetes.protobuf
+          cpuCFSQuota: true
+          cpuManagerPolicy: none
+          cpuManagerReconcilePeriod: 10s
+          enableControllerAttachDetach: true
+          enableDebuggingHandlers: true
+          enforceNodeAllocatable:
+          - pods
+          eventBurst: 10
+          eventRecordQPS: 5
+          evictionHard:
+            imagefs.available: 15%
+            memory.available: 100Mi
+            nodefs.available: 10%
+            nodefs.inodesFree: 5%
+          evictionPressureTransitionPeriod: 5m0s
+          failSwapOn: true
+          fileCheckFrequency: 20s
+          hairpinMode: promiscuous-bridge
+          healthzBindAddress: 127.0.0.1
+          healthzPort: 10248
+          httpCheckFrequency: 20s
+          imageGCHighThresholdPercent: 85
+          imageGCLowThresholdPercent: 80
+          imageMinimumGCAge: 2m0s
+          iptablesDropBit: 15
+          iptablesMasqueradeBit: 14
+          kind: KubeletConfiguration
+          tlsCertFile: "/etc/kubernetes/ssl/etcd-node.pem"
+          tlsPrivateKeyFile: "/etc/kubernetes/ssl/etcd-node-key.pem"
+          RotateCertificates: true
+          ServerTLSBootstrap: true
+          kubeAPIBurst: 10
+          kubeAPIQPS: 5
+          makeIPTablesUtilChains: true
+          maxOpenFiles: 1000000
+          maxPods: 110
+          nodeStatusUpdateFrequency: 10s
+          oomScoreAdj: -999
+          podPidsLimit: -1
+          port: 10250
+          registryBurst: 10
+          registryPullQPS: 5
+          resolvConf: /etc/resolv.conf
+          rotateCertificates: true
+          runtimeRequestTimeout: 2m0s
+          serializeImagePulls: true
+          staticPodPath: /etc/kubernetes/manifests
+          streamingConnectionIdleTimeout: 4h0m0s
+          syncFrequency: 1m0s
+          volumeStatsAggPeriod: 1m0s
     - path: /etc/kubernetes/manifests/kube-apiserver.yaml
       filesystem: root
       mode: 0644
@@ -466,57 +574,27 @@ systemd:
         
         [Service]
         Slice=system.slice
+        Environment=RKT_GLOBAL_ARGS="--insecure-options=image"
+        Environment=KUBELET_IMAGE_URL=docker://gcr.io/google_containers/hyperkube
         Environment=KUBELET_IMAGE_TAG=#KUBELET_VERSION#
         Environment=#HTTP_PROXY2#
         Environment=#HTTPS_PROXY2#
         #Environment=##HTTP_PROXY1#
         #Environment=##HTTPS_PROXY1#
         Environment=no_proxy=localhost,127.0.0.0/8,127.0.0.1,::1,#NODE1_IP#,#NODE2_IP#,#NODE3_IP#,#NODE1#,#NODE2#,#NODE3#,#NODE1#.#DOMAIN#,#NODE2#.#DOMAIN#,#NODE3#.#DOMAIN#,/var/run/docker.sock
-        ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
-        ExecStartPre=/usr/bin/mkdir -p /var/log/containers
-        ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d
-        ExecStartPre=/usr/bin/mkdir -p /opt/cni/bin
-        ExecStartPre=/usr/bin/mkdir -p /var/lib/cni
-        Environment="RKT_RUN_ARGS=--uuid-file-save=/var/run/kubelet-pod.uuid \
-          --net=host \
-          --dns=host \
-          --set-env-file=/etc/environment \
-          --volume var-lib-rkt,kind=host,source=/var/lib/rkt \
-          --mount volume=var-lib-rkt,target=/var/lib/rkt \
-          --volume dns,kind=host,source=/etc/resolv.conf \
-          --mount volume=dns,target=/etc/resolv.con \
-          --volume var-lib-cni,kind=host,source=/var/lib/cni \
-          --mount volume=var-lib-cni,target=/var/lib/cni \
-          --volume var-log,kind=host,source=/var/log \
-          --mount volume=var-log,target=/var/log \
-          --volume container,kind=host,source=/var/log/containers \
-          --mount volume=container,target=/var/log/containers \
-          --volume rkt,kind=host,source=/usr/bin/rkt \
-          --mount volume=rkt,target=/usr/bin/rkt"
         ExecStart=/usr/lib/coreos/kubelet-wrapper \
-          --address="0.0.0.0" \
           --register-node=true \
-          --container-runtime=rkt \
-          --pod-manifest-path=/etc/kubernetes/manifests \
-          --allow-privileged=true \
-          --cert-dir=/etc/kubernetes/ssl \
-          --tls-cert-file=#ETCDCTL_CERT_FILE2# \
-          --tls-private-key-file=#ETCDCTL_KEY_FILE2# \
-          --client-ca-file=#CA_FILE3# \
+          --hostname-override=#THIS_NODE# \
           --kubeconfig=/etc/kubernetes/ssl/kubeconfig.yaml \
-          --cluster-dns=#CLUSTER_DNS# \
-          --cluster-domain=cluster.local \
+          --config=/etc/kubernetes/config.yaml \
           --network-plugin=cni \
           --cni-conf-dir=/etc/kubernetes/cni/net.d \
           --lock-file=/var/run/lock/kubelet.lock \
           --exit-on-lock-contention \
-          --cloud-provider="" \
-          --cadvisor-port=4194 \
-          --cgroups-per-qos=true \
-          --cgroup-root=/ \
-          --hostname-override=#THIS_NODE#
-        ExecStop=-/usr/bin/rkt stop --uuid-file=/var/run/kubelet-pod.uuid
+          --logtostderr=true \
+          --v=2
         Restart=always
+        StartLimitInterval=0
         RestartSec=10
         
         [Install]
@@ -548,7 +626,7 @@ networkd:
         Domains=#DOMAIN#
 
 flannel:
-  version:        0.9.0
+  version:        0.10.0
   etcd_prefix:    "/coreos.com/network"
   etcd_endpoints: "https://#NODE1_IP#:2379,https://#NODE2_IP#:2379,https://#NODE3_IP#:2379"
   etcd_cafile:    #CA_FILE1#
@@ -557,7 +635,7 @@ flannel:
   interface:      #FLANNELD_IFACE#
 
 etcd:
-  version:                     3.2.9
+  version:                     3.2.17
   name:                        #THIS_NODE#
   data_dir:                    /var/lib/etcd
   listen_client_urls:          https://#THIS_NODE_IP#:2379,https://127.0.0.1:2379,https://127.0.0.1:4001

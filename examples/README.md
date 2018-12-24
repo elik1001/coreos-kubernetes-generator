@@ -1,6 +1,8 @@
 <h1>Example Files</h1>
 
 <p>The pre-generated sample files in this directory are ready to be used in a 3 master / 3 worker node configuration.</p>
+<p><b>User: </b> usera</p>.
+<p><b>User: </b> Admin_Password</p>.
 <b>The Hostname / IP scheme are below</b>.
 <table class="blueTable" style="width: 50%;" border="2">
 <thead>

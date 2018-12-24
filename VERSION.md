@@ -1,4 +1,35 @@
 <h1>Version history</h1>
+
+<h2>Version 0.7</h2>
+<b>NEW! version 0.7 works with kubernetes 1.13.1+</b>
+<ul>
+    <li>
+        <b>NEW: </b>
+        <br>Updated the script to work with kubernetes 1.13.1.
+        <br><b>Note: </b>The current updated version will most likely not work with older kubernetes versions. i.e. pre 1.13.x versions.
+    </li>
+    <li>
+        <b>Added: </b>
+        <br>This version automatically configures role based access(RBAC).
+    </li>
+    <li>
+        <b>Added: </b>
+        <br>Automatic Node bootstrapping - includes auto SSL signing with tokens.
+    </li>
+    <li>
+        <b>Update: </b>
+        <br>Updated <b>Flannel</b> from verion <i>0.9.0</i> to version <i>0.10.0</i>.
+    </li>
+    <li>
+        <b>Update: </b>
+        <br>Updated <b>etcd</b> from version <i>3.2.17</i> to version <i>3.2.9</i>.
+    </li>
+    <li>
+        <b>Tested: </b>
+        <br>This version was tested with CoreOS stable version <i>1911.5.0</i> and Alpha version <i>1995.0.0</i>.
+    </li>
+</ul>
+
 <h2>Version 0.5</h2>
 <b>Update/Fix: Python 3.x compatibility</b>
 <ul>
