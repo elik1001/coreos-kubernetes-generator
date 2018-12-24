@@ -8,7 +8,23 @@ This repository includes the Python Kubernetes Generator Script, as well as pre 
 	<li>The generated Ignition file includes all required properties for, Etcd, Flannel(with CNI), Kubelet using (Rkt), etc.. all protocols are configured to use SSL.</li>
 </ol>
 
-The script uses a wizard-like approach with a minimum set of questions, just to be able to generate a configuration.
+<i>Note: </i> This version is a major upgrade and will only work with Kubernetes version 1.13.x
+
+<br>The script uses a wizard-like approach with a minimum set of questions. 
+<br>The script then generates a workable CoreOS configuration file(s) in 3 formats.
+<ol>
+<li><b>YAML</b> The script uses the yaml file to generate the ignition file (.ign).</li>
+<li><b>IGN</b> The ignition file is used by the CoreOS live CD to create / install the OS with all required configurations.</li>
+<li><b>ISO</b> The script then creates / generates an ISO containing the ignition file, so you can just mount the ISO in the CoreOS live CD to install.</li>
+</ol>
+<br>
+
+<br>You run the script for each Node Master or Worker.
+<br>The first time you run the script it generates the SSH keys, SSL CA and SSL keys, you select / modify the options like dns, domain, proxy, etc..
+<br>You re-run the script for each master or worker node, it will remember/keep all your previous settings.
+<br>For each run/Node it will generated an output ignition configuration file in 3 formats (YAML, IGN, ISO) for you to use.
+
+With this configuration you can hopefully run / configure a new Kubernetes in a matter of minutes.
 
 <h3>Getting Started</h3>
 
@@ -53,7 +69,7 @@ You can leave most of the default values by just hitting enter - (Just replace t
 <table class="blueTable" style="width: 50%;" border="2">
 <thead>
 <tr>
-<th style="text-align: center;" colspan="2">Cluster IP Address</th>
+<th style="text-align: center;" colspan="2">Default cluster IP Address (everything can be overwritten/updated if liked)</th>
 </tr>
 </thead>
 <tbody>
@@ -182,12 +198,51 @@ Next, use the generated Ignition file, you can use the <i>IGN</i> file, or use t
 Now, run the <i>coreos-install</i> with the below parameters.
 <i>Note: </i>the <i>coreos-install</i> script comes pre-installed on CoreOS.
 <pre>
-coreos-install -d /dev/[sda] -C [stable|alpha] -i master1_template.ign
+mount /dev/[sr0] /media
+coreos-install -d /dev/[sda] -C [stable|alpha] -i /media/master1_template.ign
 </pre>
+Replace <i>sr0</i> with your cdrom.
 Replace <i>sda</i> with your disk.
 Use alpha or stable channel.
 
-Once completed just reboot the server (or virtual) and you should be good to go.
+Once completed just reboot the server (or virtual) and just login with the user/password you selected.
+<i>Note: </i>If using VirtualBox you login by doing ssh user@localhost -p 2011
+
+<br>For <i>RBAC</i> to work properly you will need to run the below one of the Master(s) once Kubernetes is fully up, you can verify with <i>kubectl get all --all-namepsaces -o wide</i>.
+
+<br>Add/create the below role binding (this will address admin access errors)
+<pre>
+kubectl create clusterrolebinding cluster-admin-binding \
+--clusterrole=cluster-admin \
+--namespace=kube-system \
+--user=admin
+</pre>
+
+<br> For the ERROR below, just run the below rolebinding.
+<pre>
+# ERROR
+W1221 15:36:11.451721       1 authentication.go:262] Unable to get configmap/extension-apiserver-authentication in kube-system.  Usually fixed by 'kubectl create rolebinding -n kube-system ROLE_NAME --role=extension-apiserver-authentication-reader --serviceaccount=YOUR_NS:YOUR_SA'
+configmaps "extension-apiserver-authentication" is forbidden: User "admin" cannot get resource "configmaps" in API group "" in the namespace "kube-system"
+
+# Create rolebinding
+kubectl create rolebinding -n kube-system extension-api-server-role --role=extension-apiserver-authentication-reader --serviceaccount=kube-system:admin
+</pre>
+
+Add the below to the <i>template/master_templ.txt</i> to automaticly download and create the kubectl file.
+<pre>
+    - path: /opt/bin/kubectl
+      filesystem: root
+      mode: 511 # 0555
+      contents:
+        remote:
+          url: http://storage.googleapis.com/kubernetes-release/release/v1.13.1/bin/linux/amd64/kubectl
+          verification:
+            hash:
+              function: sha512
+              sum: d991aa36f239b4c5262077b9fa2eeb1c4931c01c5223748ed5167838b9886b8d53cfff36ebe1344db5e7c1962af90faa0902d9b0a73174c3defa1029b6a04841
+</pre>
+<i>Note: </i> If you are behind a proxy the above code might/will not work, so copy the kubectl to /opt/bin manually.
+
 <h4>To Do's</h4>
 <ol>
 	<li>Complete Documentation</li>

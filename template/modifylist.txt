@@ -190,6 +190,12 @@
             { "#WORK_KUBECONFIG#":  
               [{"work_kubeconfig":  "/etc/kubernetes/ssl/worker-kubeconfig.yaml"}]
             },
+            { "#TOKEN#":  
+              [{"token":  "#TOKEN@"}]
+            },
+            { "#TOKEN_DETAIL#":  
+              [{"token_details":  ",kubelet-bootstrap,10001,'system:node-bootstrapper'"}]
+            },
             { "#KUBELET_VERSION#":  
               [{"kubelet_version":  "#KUBELET_VERSION@"}]
             }

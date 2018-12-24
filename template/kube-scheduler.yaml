@@ -7,7 +7,7 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-scheduler
-    image: quay.io/coreos/hyperkube:#KUBELET_VERSION#
+    image: gcr.io/google_containers/hyperkube:#KUBELET_VERSION#
     command:
     - ./hyperkube
     - scheduler

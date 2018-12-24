@@ -7,7 +7,7 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-apiserver
-    image: quay.io/coreos/hyperkube:#KUBELET_VERSION#
+    image: gcr.io/google_containers/hyperkube:#KUBELET_VERSION#
     command:
     - /hyperkube
     - apiserver
@@ -16,21 +16,24 @@ spec:
     - --allow-privileged=true
     - --service-cluster-ip-range=#CLUSTER_NETWORK#
     - --secure-port=443
-    - --insecure-port=8080
     - --advertise-address=#THIS_NODE_IP#
     - --storage-backend=etcd3
-    - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota
+    - --storage-media-type=application/json
+    - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeLabel
+    #- --admission-control=Initializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuotaInitializers,NamespaceLifecycle,LimitRanger,ServiceAccount,PersistentVolumeLabel,DefaultStorageClass,DefaultTolerationSeconds,NodeRestriction,ResourceQuota
     - --etcd-certfile=#ETCDCTL_CERT_FILE1#
     - --etcd-keyfile=#ETCDCTL_KEY_FILE1#
     - --tls-cert-file=#ETCDCTL_CERT_FILE1#
     - --tls-private-key-file=#ETCDCTL_KEY_FILE1#
+    - --kubelet-certificate-authority=#CA_FILE3#
     - --kubelet-client-certificate=#ETCDCTL_CERT_FILE1#
     - --kubelet-client-key=#ETCDCTL_KEY_FILE1#
     - --service-account-key-file=#ETCDCTL_KEY_FILE1#
     - --etcd-cafile=#CA_FILE2#
-    - --tls-ca-file=#CA_FILE2#
     - --client-ca-file=#CA_FILE2#
-    - --runtime-config=extensions/v1beta1/networkpolicies=true,extensions/v1beta1=true
+    - --runtime-config=extensions/v1beta1/networkpolicies=true,extensions/v1beta1=true,rbac.authorization.k8s.io/v1
+    - --authorization-mode=Node,RBAC
+    - --token-auth-file=/etc/kubernetes/ssl/token-bootstrap-auth.csv
     - --anonymous-auth=false
     - --audit-log-path=/var/log/kubernetes/kube-apiserver-audit.log
     - --audit-log-maxage=30
@@ -52,8 +55,11 @@ spec:
       hostPort: 8080
       name: local
     volumeMounts:
-    - mountPath: #SSL_DIR#
+    - mountPath: #KUB_SSL_DIR#
       name: ssl-certs-kubernetes
+      readOnly: true
+    - mountPath: #SSL_DIR#
+      name: ssl-certs-etcd
       readOnly: true
     - mountPath: /etc/ssl/certs
       name: ssl-certs-host
@@ -63,8 +69,11 @@ spec:
       readOnly: false
   volumes:
   - hostPath:
-      path: #SSL_DIR#
+      path: #KUB_SSL_DIR#
     name: ssl-certs-kubernetes
+  - hostPath:
+      path: #SSL_DIR#
+    name: ssl-certs-etcd
   - hostPath:
       path: /usr/share/ca-certificates
     name: ssl-certs-host

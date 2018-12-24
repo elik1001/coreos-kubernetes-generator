@@ -7,21 +7,27 @@ spec:
       hostNetwork: true
       containers:
       - name: kube-controller-manager
-        image: quay.io/coreos/hyperkube:#KUBELET_VERSION#
+        image: gcr.io/google_containers/hyperkube:#KUBELET_VERSION#
         command:
         - ./hyperkube
         - controller-manager
         - --master=https://#THIS_NODE_IP#:443
         - --kubeconfig=#KUBECONFIG#
+        - --authentication-kubeconfig=#KUBECONFIG#
+        - --authorization-kubeconfig=#KUBECONFIG#
+        - --client-ca-file=#CA_FILE3#
         - --leader-elect=true
         - --allocate-node-cidrs=true
         - --cluster-cidr=#CIDR_NETWORK#
         - --service-cluster-ip-range=10.3.0.0/21
-        - --service-account-private-key-file=#ETCDCTL_KEY_FILE2#
         - --root-ca-file=#CA_FILE3#
+        - --tls-cert-file=#CA_FILE3#
+        - --tls-private-key-file=#CA_KEY_FILE1#
+        - --cluster-signing-cert-file=#CA_FILE3#
         - --cluster-signing-key-file=#CA_KEY_FILE1#
         - --service-account-private-key-file=#ETCDCTL_KEY_FILE2#
-        - --cluster-signing-cert-file=#CA_FILE1#
+        - --use-service-account-credentials=true
+        - --experimental-cluster-signing-duration=87600h0m0s
         livenessProbe:
           httpGet:
             host: 127.0.0.1
