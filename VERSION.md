@@ -1,12 +1,16 @@
 <h1>Version history</h1>
 
 
-<h2>Version 0.8.1</h2>
+<h2>Version 0.8.2</h2>
 <b>Fix preserve user/password code</b>
 <ul>
     <li>
         <b>Fix: </b>
         <br>Miner fix to the preserve user password code.
+    </li>
+    <li>
+        <b>Add: </b>
+        <br>Docker image description.
     </li>
 </ul>
 
