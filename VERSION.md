@@ -39,7 +39,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it kube-generate:0.8
+--rm -it coreos-kubernetes-generator:0.8.1
 </pre>
 
 <h2>Version 0.7</h2>
