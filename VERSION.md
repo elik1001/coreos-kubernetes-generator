@@ -1,7 +1,40 @@
 <h1>Version history</h1>
 
+
+<h2>Version 0.8</h2>
+<b>NEW! version 0.8 is now available to run as a Docker image (elik1001/coreos-kubernetes-generator).</b>
+<ul>
+    <li>
+        <b>NEW: </b>
+        <br>The Kubernetes Ignition Generator is now available as a Docker image in the official Docker Hub.
+        <br><i>Note: </i>Using a Docker image simplifies eliminate most requirements such as the need to install Python modules, etc...
+        <br>To use the Docker image just pull the Image with <i>docker pull elik1001/coreos-kubernetes-generator</i>.
+        <br>You can also run the Docker image directly which will pull / run the image.
+    </li>
+    <li>
+        <b>Update: </b>
+        <br>The script was enhanced to preserve user login / password for next use.
+    </li>
+</ul>
+
+<br>To use the Docker image just run the below.
+<br><i>Note: </i>Output for use will be saved in the configs directory. all settings selected doing run time, will be stored in a list of directory's like ssl, ssh keys, etc...
+<pre>
+docker run \
+-e PYTHONUNBUFFERED=0 \
+--env HTTP_PROXY=$http_proxy --env HTTPS_PROXY=$http_proxy --env NO_PROXY=$no_proxy \
+--env http_proxy=$http_proxy --env https_proxy=$http_proxy --env no_proxy=$no_proxy \
+-v $(pwd)/configs:/kub-generator/configs:rw,shared \
+-v $(pwd)/keys:/kub-generator/keys:rw,shared \
+-v $(pwd)/bin:/kub-generator/bin:rw,shared \
+-v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
+-v $(pwd)/work:/kub-generator/work:rw,shared \
+-v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
+--rm -it kube-generate:0.8
+</pre>
+
 <h2>Version 0.7</h2>
-<b>NEW! version 0.7 works with kubernetes 1.13.1+</b>
+<b>Version 0.7 works with kubernetes 1.13.1+</b>
 <ul>
     <li>
         <b>NEW: </b>

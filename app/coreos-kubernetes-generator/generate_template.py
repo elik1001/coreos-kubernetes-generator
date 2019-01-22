@@ -2,11 +2,11 @@
 #title           :generate_template.py
 #description     :This will create a header for a python script.
 #author          :Eli Kleinman
-#date            :20181224
-#version         :0.7
+#date            :20190122
+#version         :0.8
 #usage           :python generate_template.py
-#notes           :Works with kubernetes version 1.13.x+ 
-#python_version  :2.7.14 or 3.6.3
+#notes           :Now available as a Docker image (image uses python version 3.6.x)  
+#python_version  :Tested with 2.7.14 or 3.6.3
 #==============================================================================
 from __future__ import print_function   # fix print code to work in python 2 and 3!
 real_raw_input = vars(__builtins__).get('raw_input',input)  # fix raw_input code to work in python 2 and 3!
@@ -16,8 +16,6 @@ import pip
 from contextlib import contextmanager
 
 os.environ['PATH'] += os.pathsep + '.'
-user_acct = 'usera'
-password = 'Admin_Password'
 replace_template = 'tmp/modifylist.txt'
 ct_url = 'https://github.com/coreos/container-linux-config-transpiler/releases/download/v0.9.0/ct-v0.9.0-x86_64-unknown-linux-gnu'
 kubectl_url = 'https://storage.googleapis.com/kubernetes-release/release/v1.13.1/bin/linux/amd64/kubectl'
@@ -59,13 +57,13 @@ dir_list = [
     'manifests', 
 ]
 dict_list = {
-    'master_nodes': ['src/master_list.txt'], 
-    'worker_nodes': ['src/worker_list.txt'], 
-    'global_settings': ['src/global_settings.txt'], 
-    'ca_ssl_list': ['src/ca_ssl_list.txt'], 
-    'ssl_list': ['src/ssl_list.txt'], 
-    'srv_cert_list': ['src/srv_cert_list.txt'],
-    'ip_cert_list': ['src/ip_cert_list.txt'],
+    'master_nodes': ['master_list.txt'],
+    'worker_nodes': ['worker_list.txt'],
+    'global_settings': ['global_settings.txt'],
+    'ca_ssl_list': ['ca_ssl_list.txt'],
+    'ssl_list': ['ssl_list.txt'],
+    'srv_cert_list': ['srv_cert_list.txt'],
+    'ip_cert_list': ['ip_cert_list.txt'],
 }
 
 #=======================================
@@ -141,14 +139,22 @@ def app_exists(app):
 #=======================================
 # Generating password
 
-def gen_pass_hash(user_account, password):
+def gen_pass_hash(user_account, password, default=None):
 
-    print_msg(['37']), print_msg(user_account), print_msg(['38']), print_msg(password), print_msg(['39']),
-    user_passwd = getpass.getpass(print_msg(['return1', '40'])) or password
-    salt = '$6$' + (uuid.uuid4().hex) + '$'
-    #salt = '$6$' + (base64.urlsafe_b64encode(uuid.uuid4().bytes)) + '$'
+    if default:
+        print_msg(['37']), print_msg(user_account), print_msg(['38']), print_msg(password), print_msg(['39']),
+        user_passwd = getpass.getpass(print_msg(['return1', '40'])) or password
+        salt = '$6$' + (uuid.uuid4().hex) + '$'
+        return (crypt.crypt(user_passwd, salt))
+    else:
+        print_msg(['37']), print_msg(user_account), print_msg('.\n')
+        user_passwd = getpass.getpass(print_msg(['return2', 'Or hit enter to keep existing encrypted password', ': '])) or password
+        salt = '$6$' + (uuid.uuid4().hex) + '$'
+        if user_passwd == password:
+            return password
+        else:
+            return (crypt.crypt(user_passwd, salt))
 
-    return (crypt.crypt(user_passwd, salt))
 
 #=====================================
 # Generating ssh keys - needs pycrypto
@@ -231,7 +237,7 @@ def ext_cmd(cmd):
 #=====================================
 # SSL and CT log output
 def logger(log):
-    f = open('output.log', 'a+')
+    f = open('tmp/output.log', 'a+')
     f.write(str(log) + '\n')
     sys.stdout.flush()
     f.close()
@@ -384,7 +390,7 @@ def ignition_platform():
     return answers['ign_platform']
 
 def create_ignition(server_template, ign_template):
-    ign_cmd = 'ct -in-file ' + server_template + ' -platform ' \
+    ign_cmd = 'bin/ct -in-file ' + server_template + ' -platform ' \
               + ignition_platform() + ' -out-file ' + ign_template
 
     ign_output = subprocess.Popen(ign_cmd, shell=True,
@@ -494,6 +500,16 @@ def print_msg(msg):
 
 #-------------------------------------
 # Load data from dictionarie files.
+for val in dict_list:
+    for item in dict_list[val]:
+        if not app_exists('work/' + item):
+            print ("Copying files for the first run", item)
+            prep_template('src/' + item, 'work/' + item, 'cp')
+            dict_list[val] = ['work/' + item]
+        else:
+            print (item, "exists")
+            dict_list[val] = ['work/' + item]
+
 print_msg(['83']), print_msg(['10']),
 master_nodes = load_lists(dict_list['master_nodes'][0], 'master_nodes')
 worker_nodes = load_lists(dict_list['worker_nodes'][0], 'worker_nodes')
@@ -538,9 +554,9 @@ print_msg(['10'])
 #-------------------------------------
 print_msg(['28'])
 
-if not app_exists('ct'):
+if not app_exists('bin/ct'):
   print_msg(['29'])
-  download_app(ct_url, 'ct')
+  download_app(ct_url, 'bin/ct')
   print_msg(['30'])
 else:
   print_msg(['31'])
@@ -548,10 +564,16 @@ print_msg(['10'])
 
 # Set User login / Password
 #-------------------------------------
-print_msg(['32']), print_msg(['33']), print_msg(['10'])
-user_account = real_raw_input(print_msg(['return1', '34'])) or user_acct
+print_msg(['32']), print_msg(['33']), print_msg(['10']), print_msg(['34'])
+if global_settings['#USER@'][1] == 'user_account':
+    user_account = real_raw_input(print_msg(['return2', global_settings['#USER@'][1], '): '])) or 'usera'
+else:
+    user_account = real_raw_input(print_msg(['return2', global_settings['#USER@'][1], ': '])) or global_settings['#USER@'][1]
 
-pass_hash = gen_pass_hash(user_account, password)
+if global_settings['#PASSWD@'][1] == 'Admin_Password':
+    pass_hash = gen_pass_hash(user_account, 'Admin_Password', 'y')
+else:
+    pass_hash = gen_pass_hash(user_account, global_settings['#PASSWD@'][1])
 
 # Setup http_proxy
 #-------------------------------------
@@ -763,9 +785,9 @@ if no_mkisofs == 'n':
 #-------------------------------------
 print_msg(['85'])
 
-if not app_exists('kubectl'):
+if not app_exists('bin/kubectl'):
   print_msg(['86'])
-  download_app(kubectl_url, 'kubectl')
+  download_app(kubectl_url, 'bin/kubectl')
   print_msg(['87'])
 else:
   print_msg(['88'])
