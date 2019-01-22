@@ -22,7 +22,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it coreos-kubernetes-generator:0.8.2
+--rm -it elik1001/coreos-kubernetes-generator:0.8.2
 </pre>
 
 <br>The script uses a wizard-like approach with a minimum set of questions. 
@@ -63,7 +63,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it coreos-kubernetes-generator:0.8.2
+--rm -it elik1001/coreos-kubernetes-generator:0.8.2
 </pre>
 
 <br>You can also build / create your own Docker image, by running the below.
