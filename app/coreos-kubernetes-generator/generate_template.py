@@ -3,7 +3,7 @@
 #description     :This will create a header for a python script.
 #author          :Eli Kleinman
 #date            :20190122
-#version         :0.8.1
+#version         :0.8.2
 #usage           :python generate_template.py
 #notes           :Now available as a Docker image (image uses python version 3.6.x)  
 #python_version  :Tested with 2.7.14 or 3.6.3

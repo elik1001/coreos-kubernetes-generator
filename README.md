@@ -22,7 +22,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it coreos-kubernetes-generator:0.8.1
+--rm -it coreos-kubernetes-generator:0.8.2
 </pre>
 
 <br>The script uses a wizard-like approach with a minimum set of questions. 
@@ -63,20 +63,20 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it coreos-kubernetes-generator:0.8.1
+--rm -it coreos-kubernetes-generator:0.8.2
 </pre>
 
 <br>You can also build / create your own Docker image, by running the below.
 <pre>
 # Build image
 docker build --no-cache \
--t coreos-kubernetes-generator:0.8.1 app
+-t coreos-kubernetes-generator:0.8.2 app
 
 # If behind a proxy
 docker build --no-cache --build-arg HTTP_PROXY=$http_proxy \
 --build-arg HTTPS_PROXY=$http_proxy --build-arg NO_PROXY=$no_proxy \
 --build-arg http_proxy=$http_proxy --build-arg https_proxy=$http_proxy \
---build-arg no_proxy=$no_proxy -t coreos-kubernetes-generator:0.8.1 app
+--build-arg no_proxy=$no_proxy -t coreos-kubernetes-generator:0.8.2 app
 </pre>
 
 <h5>Standalone Github Application</h5>
