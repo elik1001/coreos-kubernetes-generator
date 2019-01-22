@@ -8,7 +8,7 @@ Documentation and usage references are available <a href="https://www.devtech101
 
 Full source code is also available in my <a href="https://github.com/elik1001/coreos-kubernetes-generator">GitHub Repository</a>.
 
-<h4>What is CoreOS Kubernetes Generator?<h4>
+<h4>What is CoreOS Kubernetes Generator?</h4>
 
 This repository/image includes a Python Kubernetes Generator Ignition Script.
 
@@ -21,7 +21,7 @@ node.</li>
 otocols are configured to use SSL.</li>
 </ol>
 
-<h4>How to use this image<h4>
+<h4>How to use this image</h4>
 
 To just use/run the image, run something like the below.
 <pre>
@@ -65,5 +65,5 @@ docker build --no-cache --build-arg HTTP_PROXY=$http_proxy \
 --build-arg no_proxy=$no_proxy -t coreos-kubernetes-generator:0.8.2 app
 </pre>
 
-<h4>License<h4>
+<h4>License</h4>
 <a href="https://github.com/elik1001/coreos-kubernetes-generator/blob/master/LICENSE">MIT License - Full License Details is available here</a>.
