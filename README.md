@@ -8,7 +8,22 @@ This repository includes the Python Kubernetes Generator Script, as well as pre 
 	<li>The generated Ignition file includes all required properties for, Etcd, Flannel(with CNI), Kubelet using (Rkt), etc.. all protocols are configured to use SSL.</li>
 </ol>
 
-<i>Note: </i> This version is a major upgrade and will only work with Kubernetes version 1.13.x
+<b>NEW! version 0.8 is now available to run as a Docker image (elik1001/coreos-kubernetes-generator)</b>
+<br>To use the Docker image just run the below.
+<br><i>Note: </i>Output for use will be saved in the configs directory. all settings selected doing run time, will be stored in a list of directory's like ssl, ssh keys, etc...
+<pre>
+docker run \
+-e PYTHONUNBUFFERED=0 \
+--env HTTP_PROXY=$http_proxy --env HTTPS_PROXY=$http_proxy --env NO_PROXY=$no_proxy \
+--env http_proxy=$http_proxy --env https_proxy=$http_proxy --env no_proxy=$no_proxy \
+-v $(pwd)/configs:/kub-generator/configs:rw,shared \
+-v $(pwd)/keys:/kub-generator/keys:rw,shared \
+-v $(pwd)/bin:/kub-generator/bin:rw,shared \
+-v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
+-v $(pwd)/work:/kub-generator/work:rw,shared \
+-v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
+--rm -it kube-generate:0.8
+</pre>
 
 <br>The script uses a wizard-like approach with a minimum set of questions. 
 <br>The script then generates a workable CoreOS configuration file(s) in 3 formats.
@@ -18,6 +33,8 @@ This repository includes the Python Kubernetes Generator Script, as well as pre 
 <li><b>ISO</b> The script then creates / generates an ISO containing the ignition file, so you can just mount the ISO in the CoreOS live CD to install.</li>
 </ol>
 <br>
+
+<i>Note: </i> Version (0.7+) will only work with Kubernetes version 1.13.x+
 
 <br>You run the script for each Node Master or Worker.
 <br>The first time you run the script it generates the SSH keys, SSL CA and SSL keys, you select / modify the options like dns, domain, proxy, etc..
@@ -31,7 +48,39 @@ With this configuration you can hopefully run / configure a new Kubernetes in a 
 <b>Please read the <a href="VERSION.md">change log</a> before you begin.</b>
 
 <h4>Installation</h4>
-<h4>Dependencies / Prerequisites</h4>
+
+<h5>Docker Image Usage</h5>
+<br>To use the Docker image just run the below.
+<br><i>Note: </i>Output for use will be saved in the configs directory. all settings selected doing run time, will be stored in a list of directory's like ssl, ssh keys, etc...
+<pre>
+docker run \
+-e PYTHONUNBUFFERED=0 \
+--env HTTP_PROXY=$http_proxy --env HTTPS_PROXY=$http_proxy --env NO_PROXY=$no_proxy \
+--env http_proxy=$http_proxy --env https_proxy=$http_proxy --env no_proxy=$no_proxy \
+-v $(pwd)/configs:/kub-generator/configs:rw,shared \
+-v $(pwd)/keys:/kub-generator/keys:rw,shared \
+-v $(pwd)/bin:/kub-generator/bin:rw,shared \
+-v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
+-v $(pwd)/work:/kub-generator/work:rw,shared \
+-v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
+--rm -it kube-generate:0.8
+</pre>
+
+<br>You can also build / create your own Docker image, by running the below.
+<pre>
+# Build image
+docker build --no-cache \
+-t kube-generate:0.8 app
+
+# If behind a proxy
+docker build --no-cache --build-arg HTTP_PROXY=$http_proxy \
+--build-arg HTTPS_PROXY=$http_proxy --build-arg NO_PROXY=$no_proxy \
+--build-arg http_proxy=$http_proxy --build-arg https_proxy=$http_proxy \
+--build-arg no_proxy=$no_proxy -t kube-generate:0.8 app
+</pre>
+
+<h5>Standalone Github Application</h5>
+<h5>Dependencies / Prerequisites</h5>
 <b>The following libraries are required:</b>
 <i>Note: </i>The script will (try to) download and install the required libraries (if needed).
 <pre>
