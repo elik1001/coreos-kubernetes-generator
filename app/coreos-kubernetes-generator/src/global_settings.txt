@@ -1,8 +1,8 @@
 {
  "#THIS_NODE@": ['this_node', 'this_host_name'],
  "#THIS_NODE_IP@": ['this_node_ip', 'this_ip_addr'],
- "#USER@": ['user', 'user_account'],
- "#PASSWD@": ['passwd', 'pass_hash'],
+ "#USER@": ['user', 'usera'],
+ "#PASSWD@": ['passwd', 'Admin_Password'],
  "#SSH_KEY@": ['ssh_key', 'pub_key'],
  "#DOMAIN@": ['domain', 'example.com'],
  "#NODE_GW@": ['gateway', '172.20.0.1'],
