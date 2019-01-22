@@ -1,9 +1,9 @@
 <h3>Supported tags and respective Dockerfile links</h3>
 <ul>
     <li>0.8.2</li>   
-<ul>
+</ul>
 
-<h4>Reference<h4>
+<h4>Reference</h4>
 Documentation and usage references are available <a href="https://www.devtech101.com/>on my blog</a>, Or in a my <a href="https://github.com/elik1001/coreos-kubernetes-generator">GitHub Repository</a>.
 
 Full source code is also available in my <a href="https://github.com/elik1001/coreos-kubernetes-generator">GitHub Repository</a>.
