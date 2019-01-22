@@ -7,7 +7,7 @@
     <li>
         <b>NEW: </b>
         <br>The Kubernetes Ignition Generator is now available as a Docker image in the official Docker Hub.
-        <i>Note: </i>Using a Docker image simplifies eliminate most requirements such as the need to install Python modules, etc...
+        <br><i>Note: </i>Using a Docker image simplifies eliminate most requirements such as the need to install Python modules, etc...
         <br>To use the Docker image just pull the Image with <i>docker pull elik1001/coreos-kubernetes-generator</i>.
         <br>You can also run the Docker image directly which will pull / run the image.
     </li>
