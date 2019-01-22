@@ -55,8 +55,10 @@ Then to build the image, just run the below.
 # Build image
 docker build --no-cache \
 -t coreos-kubernetes-generator:0.8.2 app
+</pre>
 
-# If behind a proxy
+If behind a proxy
+<pre>
 docker build --no-cache --build-arg HTTP_PROXY=$http_proxy \
 --build-arg HTTPS_PROXY=$http_proxy --build-arg NO_PROXY=$no_proxy \
 --build-arg http_proxy=$http_proxy --build-arg https_proxy=$http_proxy \
