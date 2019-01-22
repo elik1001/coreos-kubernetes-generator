@@ -1,6 +1,15 @@
 <h1>Version history</h1>
 
 
+<h2>Version 0.8.1</h2>
+<b>Fix preserve user/password code</b>
+<ul>
+    <li>
+        <b>Fix: </b>
+        <br>Miner fix to the preserve user password code.
+    </li>
+</ul>
+
 <h2>Version 0.8</h2>
 <b>NEW! version 0.8 is now available to run as a Docker image (elik1001/coreos-kubernetes-generator).</b>
 <ul>
