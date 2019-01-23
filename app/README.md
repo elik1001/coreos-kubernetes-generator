@@ -39,7 +39,7 @@ docker run \
 **Behind a proxy, use the below.**
 
 ```
-docker run
+docker run \
 -e PYTHONUNBUFFERED=0 \
 --env HTTP_PROXY=$http_proxy \
 --env HTTPS_PROXY=$http_proxy \
