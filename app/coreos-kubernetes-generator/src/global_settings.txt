@@ -17,7 +17,7 @@
  "#HTTPS_PROXY1@": ['https_proxy', None],
  "#HTTP_PROXY2@": ['HTTP_PROXY', None],
  "#HTTPS_PROXY2@": ['HTTPS_PROXY', None],
- "#KUBELET_VERSION@": ['kubelet_version', 'v1.8.0_coreos.0'],
+ "#KUBELET_VERSION@": ['kubelet_version', 'v1.13.2'],
  '#TOKEN@': ['token', None],
  "#FLANNELD_IFACE@": ['flanneld_iface', 'enp0s3'],
  "#FLANNELD_ETCD_PREFIX@": ['flanneld_etcd_prefix', '/coreos.com/network'],

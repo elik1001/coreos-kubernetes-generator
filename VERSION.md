@@ -1,6 +1,9 @@
 <h1>Version history</h1>
 
 
+<h2>Version 0.8.3</h2>
+<b>Fix: </b>Fixed the defualt kubelet(google) version to v1.13.2 from v1.8.0_coreos.0 in global_settings.
+
 <h2>Version 0.8.2</h2>
 <b>Fix preserve user/password code</b>
 <ul>
