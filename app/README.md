@@ -73,7 +73,7 @@ git clone https://github.com/elik1001/coreos-kubernetes-generator
 
 Then to build the image, just run the below.
 ```
-docker build --no-cache -t coreos-kubernetes-generator:0.8.2 app
+docker build --no-cache -t coreos-kubernetes-generator:0.8.4 app
 ```
 
 **If behind a proxy**
