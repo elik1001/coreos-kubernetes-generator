@@ -3,6 +3,7 @@
 *   latest
 *   0.8.1
 *   0.8.2
+*   0.8.4
 
 #### Reference
 
@@ -33,7 +34,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it elik1001/coreos-kubernetes-generator:0.8.2
+--rm -it elik1001/coreos-kubernetes-generator:0.8.4
 ```
 
 **Behind a proxy, use the below.**
@@ -53,7 +54,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it elik1001/coreos-kubernetes-generator:0.8.2 
+--rm -it elik1001/coreos-kubernetes-generator:0.8.4
 ```
 
 **Notes on stored directory:**
@@ -84,7 +85,7 @@ docker build --no-cache \
 --build-arg http_proxy=$http_proxy \
 --build-arg https_proxy=$http_proxy \
 --build-arg no_proxy=$no_proxy \
--t coreos-kubernetes-generator:0.8.2 app 
+-t coreos-kubernetes-generator:0.8.4 app 
 ```
 
 #### License
