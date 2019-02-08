@@ -42,7 +42,7 @@
  "41":[' overwrite the SSH keys ? (existing keys were found in the keys directory)'],
  "42":['Please provide a Hostname (default:'],
  "43":['(default: coreos1): '],
- "44":['Please provide the IP Address to be used for'],
+ "44":['Please provide the IP Address to be used for '],
  "45":['(default:'],
  "46":['\nNote: If this installation is one of the 3 Master nodes,\n'],
  "47":['please use the same hostname/ip address entered above.\n'],

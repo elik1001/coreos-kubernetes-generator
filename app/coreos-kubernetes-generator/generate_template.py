@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 #title           :generate_template.py
-#description     :This will create a header for a python script.
+#description     :CoreOS Kubernetes Ignition generator
 #author          :Eli Kleinman
-#date            :20190122
-#version         :0.8.2
+#date            :20190208
+#version         :0.8.5
 #usage           :python generate_template.py
 #notes           :Now available as a Docker image (image uses python version 3.6.x)  
 #python_version  :Tested with 2.7.14 or 3.6.3
@@ -65,6 +65,7 @@ dict_list = {
     'srv_cert_list': ['srv_cert_list.txt'],
     'ip_cert_list': ['ip_cert_list.txt'],
 }
+masters = 1
 
 #=======================================
 # Verifying required python modules
@@ -293,24 +294,26 @@ def modify_source(update_source, x, y):
       update_source = update_source.replace(x, y)
       return update_source
 
-def prepare_source(update_source, i, host_name, ip_addr):
+def prepare_source(update_source, i, host_name, ip_addr, masters):
 
-    new_host_name = real_raw_input('Please provide the \"Master' + \
-                             (re.findall(r'\d+', host_name)[0]) + \
-                             '\" hostname (default: ' + host_name + ')?: ') or host_name
-    new_ip_addr = real_raw_input('Please provide the master' + \
-                           (re.findall(r'\d+', host_name)[0]) + \
-                           '(' + new_host_name + ') \"ip address\" (default: ' + ip_addr + ') ?: ') or ip_addr
+    new_host_name = real_raw_input('Please provide "Master' \
+                        + str(masters) \
+                        + '" hostname (default: ' + host_name + ')?: ') or host_name
+    new_ip_addr = real_raw_input('Please provide master' \
+                      + str(masters) \
+                      + '(' + new_host_name + ') \"ip address\" (default: ' + ip_addr + ') ?: ') or ip_addr
+    node = re.findall(r'\d+', host_name)
 
-    update_source = modify_source(update_source, '#NODE' + \
-                                 (re.findall(r'\d+', host_name)[0]) + '@', new_host_name)
+    update_source = modify_source(update_source, '#NODE' \
+                        + (str(masters)[0]) + '@', new_host_name)
     master_nodes[i][0] = new_host_name
 
-    update_source = modify_source(update_source, '#NODE' + \
-                                 (re.findall(r'\d+', host_name)[0]) + '_IP@', new_ip_addr)
+    update_source = modify_source(update_source, '#NODE' \
+                        + (str(masters)[0]) + '_IP@', new_ip_addr)
     master_nodes[i][1] = new_ip_addr
+    masters += 1
 
-    return update_source
+    return masters, update_source
 
 #=======================================
 # Modify Global properties
@@ -641,7 +644,7 @@ global_settings['#TOKEN@'][1] = token
 
 print_msg(['46']), print_msg(['47']), print_msg(['10'])
 for i in sorted(master_nodes):
-  update_source = prepare_source(update_source, i, master_nodes[i][0], master_nodes[i][1])
+  masters, update_source = prepare_source(update_source, i, master_nodes[i][0], master_nodes[i][1], masters)
 update_dict_src(master_nodes, dict_list['master_nodes'][0])
 
 print_msg(['10']), print_msg(['48']), print_msg(['10'])

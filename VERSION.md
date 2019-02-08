@@ -1,6 +1,9 @@
 <h1>Version history</h1>
 
 
+<h2>Version 0.8.5</h2>
+<b>Fix: </b>Fixed issue when using non default master hostnames, node names will not get properly set in the configuration files (yaml, iso, ign).
+
 <h2>Version 0.8.3</h2>
 <b>Fix: </b>Fixed the defualt kubelet(google) version to v1.13.2 from v1.8.0_coreos.0 in global_settings.
 
@@ -46,7 +49,7 @@ docker run \
 -v $(pwd)/ssl:/kub-generator/ssl:rw,shared \
 -v $(pwd)/work:/kub-generator/work:rw,shared \
 -v $(pwd)/tmp:/kub-generator/tmp:rw,shared \
---rm -it elik1001/coreos-kubernetes-generator:0.8.2
+--rm -it elik1001/coreos-kubernetes-generator:0.8.5
 </pre>
 
 <h2>Version 0.7</h2>
