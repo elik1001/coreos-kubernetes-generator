@@ -693,7 +693,7 @@ global_mod_yn = mod_set_yn(print_msg(['return1', '55']), False)
 if global_mod_yn:
   done_add = 'true'
   while done_add == 'true':
-    if (int(srv_cert_list.keys()[-1])+1) < 10:
+    if (int(list(srv_cert_list.keys())[-1])+1) < 10:
       rec = '0' + str(int(srv_cert_list.keys()[-1])+1)
       n_rec = str(int(srv_cert_list.keys()[-1])+1)
       done_add, srv_cert_list = add_cert_val(srv_cert_list, 'Host Name', rec, n_rec)
@@ -724,7 +724,7 @@ global_mod_yn = mod_set_yn(print_msg(['return1', '59']), False)
 if global_mod_yn:
   done_add = 'true'
   while done_add == 'true':
-    if (int(ip_cert_list.keys()[-1])+1) < 10:
+    if (int(list(ip_cert_list.keys())[-1])+1) < 10:
       rec = '0' + str(int(ip_cert_list.keys()[-1])+1)
       n_rec = str(int(ip_cert_list.keys()[-1])+1)
       done_add, ip_cert_list = add_cert_val(ip_cert_list, 'IP Address', rec, n_rec)
