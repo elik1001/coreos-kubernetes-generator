@@ -93,6 +93,16 @@ docker build --no-cache --build-arg HTTP_PROXY=$http_proxy \
 --build-arg http_proxy=$http_proxy --build-arg https_proxy=$http_proxy \
 --build-arg no_proxy=$no_proxy -t coreos-kubernetes-generator:0.8.5 app
 </pre>
+After that identify name of container (under NAMES.. last column), start, enter it and run script:
+<pre>
+docker ps -a
+CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS                    PORTS     NAMES
+5c3c6ffb02ba   coreos-kubernetes-generator:0.8.5   "python ./generate_t…"   10 hours ago     Up 10 hours                         vigorous_heyrovsky
+
+docker start vigorous_heyrovsky
+docker exec -it vigorous_heyrovsky /bin/bash
+./generate_template.py
+</pre>
 
 <h5>Standalone Github Application</h5>
 <h5>Dependencies / Prerequisites</h5>
