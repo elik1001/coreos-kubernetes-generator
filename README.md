@@ -94,6 +94,7 @@ docker build --no-cache --build-arg HTTP_PROXY=$http_proxy \
 --build-arg no_proxy=$no_proxy -t coreos-kubernetes-generator:0.8.5 app
 </pre>
 
+
 <h5>Standalone Github Application</h5>
 <h5>Dependencies / Prerequisites</h5>
 <b>The following libraries are required:</b>
